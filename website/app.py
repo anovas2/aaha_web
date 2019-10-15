@@ -1,34 +1,53 @@
 import os
-
+import sys
+import sqlite3
 import pandas as pd
 import numpy as np
 
-import sqlalchemy
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
+import queries
 
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+# PATH = os.path.abspath(os.path.dirname(sys.argv[0]))
+# DB_PATH = os.path.join(PATH, r'aaha.db')
+
+DB_PATH = r'db/aaha.db'
+
 
 #################################################
 # Database Setup
 #################################################
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-db = SQLAlchemy(app)
 
-# reflect an existing database into a new model
-Base = automap_base()
-# reflect the tables
-Base.prepare(db.engine, reflect=True)
+connection = queries.create_connection(DB_PATH)
+cursor = connection.cursor()
 
-# Save references to each table
-Samples_Metadata = Base.classes.sample_metadata
-Samples = Base.classes.samples
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/aaha.db"
+# db = SQLAlchemy(app)
+#
+# # reflect an existing database into a new model
+# Base = automap_base()
+# # reflect the tables
+# Base.prepare(db.engine, reflect=True)
+#
+# # Save references to each table
+# # census_dataset = Base.classes.census_dataset
+# Census_income_to_rent_dataset = Base.classes.census_income_to_rent_dataset
+# censustract = Base.classes.censustract
+# hud_dataset = Base.classes.hud_dataset
+# nhpd_dataset = Base.classes.nhpd_dataset
+#
+#
+#
+
+census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
+census_dataset = queries.get_df(connection, 'census_dataset')
+censustract = queries.get_df(connection, 'censustract')
+hud_dataset = queries.get_df(connection, 'hud_dataset')
+nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
 
 
 @app.route("/")
@@ -37,16 +56,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/names")
+@app.route("/incomes")
 def names():
     """Return a list of sample names."""
 
     # Use Pandas to perform the sql query
-    stmt = db.session.query(Samples).statement
-    df = pd.read_sql_query(stmt, db.session.bind)
+    incomes = census_income_to_rent_dataset['Income'].drop_duplicates()
 
     # Return a list of the column names (sample names)
-    return jsonify(list(df.columns)[2:])
+    # return jsonify(list(df.columns)[2:])
+    return jsonify(list(incomes))
 
 
 @app.route("/metadata/<sample>")
