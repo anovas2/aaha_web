@@ -3,8 +3,12 @@ import os
 import sqlite3
 import pandas as pd
 
-def create_connection(DB_PATH):
+
+def create_connection():
     """ create a database connection to a SQLite database """
+    DB_PATH = r'website/db/aaha.db'
+
+
     try:
         conn = sqlite3.connect(DB_PATH)
         print(sqlite3.version)

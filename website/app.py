@@ -14,7 +14,7 @@ app = Flask(__name__)
 # PATH = os.path.abspath(os.path.dirname(sys.argv[0]))
 # DB_PATH = os.path.join(PATH, r'aaha.db')
 
-DB_PATH = r'db/aaha.db'
+
 
 
 #################################################
@@ -22,7 +22,7 @@ DB_PATH = r'db/aaha.db'
 #################################################
 
 
-connection = queries.create_connection(DB_PATH)
+connection = queries.create_connection()
 cursor = connection.cursor()
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/aaha.db"
