@@ -7,7 +7,7 @@ import numpy as np
 import queries
 
 from flask import Flask, jsonify, render_template
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
@@ -44,10 +44,10 @@ cursor = connection.cursor()
 #
 
 census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
-census_dataset = queries.get_df(connection, 'census_dataset')
-censustract = queries.get_df(connection, 'censustract')
-hud_dataset = queries.get_df(connection, 'hud_dataset')
-nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
+# census_dataset = queries.get_df(connection, 'census_dataset')
+# censustract = queries.get_df(connection, 'censustract')
+# hud_dataset = queries.get_df(connection, 'hud_dataset')
+# nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
 
 
 @app.route("/")
