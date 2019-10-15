@@ -44,10 +44,10 @@ cursor = connection.cursor()
 #
 
 census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
-# census_dataset = queries.get_df(connection, 'census_dataset')
-# censustract = queries.get_df(connection, 'censustract')
-# hud_dataset = queries.get_df(connection, 'hud_dataset')
-# nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
+census_dataset = queries.get_df(connection, 'census_dataset')
+censustract = queries.get_df(connection, 'censustract')
+hud_dataset = queries.get_df(connection, 'hud_dataset')
+nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
 
 
 @app.route("/")
@@ -56,7 +56,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/incomes")
+@app.route("/census_income_to_rent_dataset/income_brackets")
 def names():
     """Return a list of sample names."""
 
