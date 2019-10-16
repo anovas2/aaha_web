@@ -1,7 +1,7 @@
 // Creating map object
 var myMap = L.map("map", {
   center: [33.7490, -84.3880],
-  zoom: 8
+  zoom: 9
 });
 
 // Adding tile layer
@@ -48,7 +48,7 @@ d3.json(geoData, function(data) {
 
     // Binding a pop-up to each layer NEED TO FIX POPUP
     onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.NAMELSAD + "<br>Percent of Households:<br>" +
+      layer.bindPopup(feature.properties.NAMELSAD + "<br>" + choice + "<br>" +
         "" + feature.properties[choice]);
     }
   }).addTo(myMap);
@@ -64,7 +64,7 @@ d3.json(geoData, function(data) {
     var labels = [];
 
     // Add min & max
-    var legendInfo = "<h1>Median Income</h1>" +
+    var legendInfo = "<h1>" + choice + "</h1>" +
       "<div class=\"labels\">" +
         "<div class=\"min\">" + limits[0] + "</div>" +
         "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
