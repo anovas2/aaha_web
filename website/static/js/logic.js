@@ -17,14 +17,18 @@ var geoData = "../static/js/metroatlanta.geojson";
 
 var geojson;
 
+function buildmap(choice) {
+
+  //console.log(feature.properties[choice][0]);
+  console.log(choice)
 // Grab data with d3
 d3.json(geoData, function(data) {
-
+  console.log(data)
   // Create a new choropleth layer
   geojson = L.choropleth(data, {
 
     // Define what  property in the features to use
-    valueProperty: "HHPercentExtreme",
+    valueProperty: choice,
 	  
 
     // Set color scale
@@ -42,12 +46,14 @@ d3.json(geoData, function(data) {
       fillOpacity: 0.4
     },
 
-    // Binding a pop-up to each layer
+    // Binding a pop-up to each layer NEED TO FIX POPUP
     onEachFeature: function(feature, layer) {
       layer.bindPopup(feature.properties.NAMELSAD + "<br>Percent of Households:<br>" +
-        "" + feature.properties.HHPercentExtreme);
+        "" + feature.properties[choice]);
     }
   }).addTo(myMap);
+
+
 
   // Set up the legend
   var legend = L.control({ position: "bottomright" });
@@ -78,3 +84,28 @@ d3.json(geoData, function(data) {
   legend.addTo(myMap);
 
 });
+
+};
+
+
+
+
+function init() {
+  // Grab a reference to the dropdown select element
+  var choice = d3.select('input[name="choice"]:checked').node().value;
+
+    // Use the first sample from the list to build the initial plots
+    buildmap(choice);
+
+  
+}
+
+function handleClick(choice) {
+  // Fetch new data each time a new sample is selected
+  geojson.clearLayers()
+  buildmap(choice);
+  
+}
+
+// Initialize the dashboard
+init();
