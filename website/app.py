@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 import queries
-import geojson
+# import geojson
 
 from flask import Flask, jsonify, render_template
 # from flask_sqlalchemy import SQLAlchemy
