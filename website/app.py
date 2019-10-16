@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 
 import queries
+import geojson
 
 from flask import Flask, jsonify, render_template
 # from flask_sqlalchemy import SQLAlchemy
@@ -44,11 +45,12 @@ cursor = connection.cursor()
 #
 
 census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
-census_dataset = queries.get_df(connection, 'census_dataset')
-censustract = queries.get_df(connection, 'censustract')
-hud_dataset = queries.get_df(connection, 'hud_dataset')
-nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
+# census_dataset = queries.get_df(connection, 'census_dataset')
+# censustract = queries.get_df(connection, 'censustract')
+# hud_dataset = queries.get_df(connection, 'hud_dataset')
+# nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
 
+# geojson.geojson_convert(census_income_to_rent_dataset)
 
 @app.route("/")
 def index():
@@ -57,7 +59,7 @@ def index():
 
 
 @app.route("/census_income_to_rent_dataset/income_brackets")
-def names():
+def incomes():
     """Return a list of sample names."""
 
     # Use Pandas to perform the sql query
@@ -98,7 +100,7 @@ def sample_metadata(sample):
     return jsonify(sample_metadata)
 
 
-@app.route("/samples/<sample>")
+@app.route("/census_income_to_rent_dataset/<sample>")
 def samples(sample):
     """Return `otu_ids`, `otu_labels`,and `sample_values`."""
     stmt = db.session.query(Samples).statement
