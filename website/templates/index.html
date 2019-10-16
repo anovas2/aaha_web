@@ -6,48 +6,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Flask Plotlyjs Example</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>Achieving Affordable Housing in Atlanta</h1>
-        <p>Use the interactive charts below to explore the dataset</p>
-      </div>
+   <!-- Nav start-->
+   <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <img style="width:80px;height:80px;" src="images/kisspng-computer-icons-thought-person-5ae1f620b714b0.4282073315247580487499.jpg" alt="thinking icon">
+              <a class="navbar-brand" href="#">AAHA Analytics</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto btn-style">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About the Team</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Data Stories
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Story #1</a>
+                            <a class="dropdown-item" href="#">Story #2</a>
+                            <a class="dropdown-item" href="#">Story #3</a>
+                            <a class="dropdown-item" href="#">Story #4</a>
+                            <a class="dropdown-item" href="#">Data Used</a>
+                          </div>
+                  </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+              </div>
+            </nav>
+            <!-- Nav end-->
+            <!-- Beginning container-->
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12 jumbotron text-center">
+                  <h1>Achieving Affordable Housing in Atlanta</h1>
+                  <p>Use the interactive charts below to explore the dataset</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-2">
+                  <div class="well">
+                    <h5>SELECT Sample:</h5>
+                    <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                  </div>
+                </div>
+                <div class="col-10">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore veritatis, assumenda accusamus natus eum explicabo sed possimus alias aliquam deserunt sit ipsa earum amet rerum id quibusdam ipsam ex autem!
+                </div>
+              </div>
+              <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-12">
+                        <div class="card" style="width: 18rem; float: left;">
+                            <img src="images/placeholder.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem; float: left;">
+                            <img src="images/placeholder.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>  
+                        <div class="card" style="width: 18rem; float: left;">
+                            <img src="images/placeholder.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem; float: left;">
+                            <img src="images/placeholder.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+        
+                  </div> 
     </div>
-    <div class="row">
-      <div class="col-md-2">
-        <div class="well">
-          <h5>SELECT Sample:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Sample MetaData</h3>
-          </div>
-          <div id="sample-metadata" class="panel-body"></div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div id="pie"></div>
-      </div>
-      <div class="col-md-5">
-        <div id="bubble"></div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-  </div>
-
+   <!-- end container-->
+              <!-- Footer container-->
+                  <div class="container-fluid bottomFooter">
+                    <div class="row ">
+                      <div class="col-4">
+                          copyright info © 2019 AAHA Analytics firm  
+                      </div>
+                      <div class="col-4">
+                          One of three columns
+                      </div>
+                      <div class="col-4">
+                          Social Media: <br>
+                          <a href="#"><img src="#" alt="" style="color:blue;">@Facebook</a><br>
+                          <a href="#"><img src="#" alt="" style="color:black;">@GitHub</a><br>
+                          <a href="#"><img src="#" alt="" style="color:yellow;">@Twitter</a>
+                      </div>
+                    </div>
+    </div>   
+                <!-- Footer end-->
   <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>       
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>   
 </body>
 
 </html>

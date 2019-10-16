@@ -1,0 +1,27 @@
+.navElement{
+float: left;   
+}
+
+.bottomFooter{
+    margin: 30px;
+    padding: 40px;
+    background-color: #f8f9fa;
+    color: #007bff;
+    text-align: center;
+    border: #007bff;
+}
+.carousel{
+    padding-top: 40px;
+}
+.carousel-caption{
+    color: #000000;
+}
+
+.allcards{
+   margin: 0px;
+   padding-left: 137px;
+}
+
+.grayout{
+    color: #f8f9fa;
+}
