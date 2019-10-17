@@ -70,6 +70,7 @@ def incomes():
     return jsonify(list(incomes))
 
 
+
 @app.route("/census_income_to_rent_dataset/years")
 def years():
     """Return a list of sample names."""
