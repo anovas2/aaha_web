@@ -6,7 +6,7 @@ import pandas as pd
 
 def create_connection():
     """ create a database connection to a SQLite database """
-    DB_PATH = r'db/aaha2.sqlite'
+    DB_PATH = r'db/aaha.db'
 
 
     try:
