@@ -22,7 +22,7 @@
 
     <!-- Leaflet-Choropleth JavaScript -->
     <script type="text/javascript" src="../static/js/choropleth.js"></script>
-	
+    <script src="https://public.tableau.com/javascripts/api/tableau-2.js"></script>
 	    <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="../static/css/style_map.css">
 </head>
@@ -41,7 +41,7 @@
         <div class="well">
           <h5>SELECT Sample:</h5>
 
-		  <select id="selDatasetyearstory1" onchange="optionChanged(this.value)"></select>
+		  <select id="selDatasetyearstory" onchange="optionChanged(this.value)"></select>
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -72,9 +72,10 @@
 
     <script type="text/javascript" src="../static/js/config.js"></script>
     <script type="text/javascript" src="../static/js/logic.js"></script>
+    <script type="text/javascript" src="../static/js/loadtableau.js"></script>
 
   <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script> -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" src="../static/js/bonus.js"></script>
     <script type="text/javascript" src="../static/js/app.js"></script>
