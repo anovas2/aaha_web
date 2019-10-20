@@ -24,8 +24,7 @@
       
           <!-- Our CSS -->
       <link rel="stylesheet" type="text/css" href="../static/css/style_map.css">
-        <!--Tableau Story One JavaScript-->
-      <script src="https://public.tableau.com/views/AAHAWebProject-Story2Only/Story2-Whereandhowbadisit?:retry=yes&:embed=y&:display_count=yes&:origin=viz_share_link"></script>
+        <!--Tableau Story Two JavaScript-->
 
       
   </head>
@@ -70,15 +69,14 @@
         </div>
         <div class="col-md-10">
             <div id="vizContainer"></div>
-            <title>Basic Embed</title>
-
             <script type="text/javascript"
                 src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
             <script type="text/javascript">
                 function initViz() {
                     var containerDiv = document.getElementById("vizContainer"),
-                        url = "https://public.tableau.com/views/AAHAWebProject-Story2Only/Story2-Whereandhowbadisit?:retry=yes&:embed=y&:display_count=yes&:origin=viz_share_link",
+                        url = "https://public.tableau.com/views/AAHAWebProject-Story2StoryVersion/Story1?:embed=y&:display_count=yes&publish=yes&:origin=viz_share_link",
                         options = {
+                            hideTabs: true,
                             onFirstInteractive: function () {
                                 console.log("Run this code when the viz has finished loading.");
                             }
