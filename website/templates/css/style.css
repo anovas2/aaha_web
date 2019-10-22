@@ -25,3 +25,16 @@ float: left;
 .grayout{
     color: #f8f9fa;
 }
+.cardsAll{
+    position: relative;
+    margin-top: 60px;
+}
+
+.nav{
+    background-color: white;
+}
+
+.bannerarea{
+    background-image: url("images/First-time-homebuyer-mistakes.jpeg");
+
+}
