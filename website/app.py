@@ -7,7 +7,7 @@ import numpy as np
 import queries
 # import geojson
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, url_for
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -133,6 +133,11 @@ def samples(sample):
         "otu_labels": sample_data.otu_label.tolist(),
     }
     return jsonify(data)
+
+
+@app.route('/story1.html')
+def story1():
+    return render_template('story1.html')
 
 
 if __name__ == "__main__":
