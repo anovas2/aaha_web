@@ -1,35 +1,57 @@
 import os
-
+# import sys
+import sqlite3
 import pandas as pd
 import numpy as np
 
-import sqlalchemy
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
+import queries
+# import geojson
 
-from flask import Flask, jsonify, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, render_template, url_for
+
+# from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+# PATH = os.path.abspath(os.path.dirname(sys.argv[0]))
+# DB_PATH = os.path.join(PATH, r'aaha.db')
 
 
 #################################################
 # Database Setup
 #################################################
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-db = SQLAlchemy(app)
 
-# reflect an existing database into a new model
-Base = automap_base()
-# reflect the tables
-Base.prepare(db.engine, reflect=True)
+connection = queries.create_connection()
+cursor = connection.cursor()
 
-# Save references to each table
-Samples_Metadata = Base.classes.sample_metadata
-Samples = Base.classes.samples
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/aaha.db"
+# db = SQLAlchemy(app)
+#
+# # reflect an existing database into a new model
+# Base = automap_base()
+# # reflect the tables
+# Base.prepare(db.engine, reflect=True)
+#
+# # Save references to each table
+# # census_dataset = Base.classes.census_dataset
+# Census_income_to_rent_dataset = Base.classes.census_income_to_rent_dataset
+# censustract = Base.classes.censustract
+# hud_dataset = Base.classes.hud_dataset
+# nhpd_dataset = Base.classes.nhpd_dataset
+#
+#
+#
 
+census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
+
+
+# census_dataset = queries.get_df(connection, 'census_dataset')
+# censustract = queries.get_df(connection, 'censustract')
+# hud_dataset = queries.get_df(connection, 'hud_dataset')
+# nhpd_dataset = queries.get_df(connection, 'nhpd_dataset')
+
+# geojson.geojson_convert(census_income_to_rent_dataset)
 
 @app.route("/")
 def index():
@@ -37,68 +59,109 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/names")
-def names():
+@app.route("/census_income_to_rent_dataset/income_brackets")
+def incomes():
     """Return a list of sample names."""
 
     # Use Pandas to perform the sql query
-    stmt = db.session.query(Samples).statement
-    df = pd.read_sql_query(stmt, db.session.bind)
+    incomes = census_income_to_rent_dataset['Income'].drop_duplicates()
 
     # Return a list of the column names (sample names)
-    return jsonify(list(df.columns)[2:])
+    # return jsonify(list(df.columns)[2:])
+    return jsonify(list(incomes))
 
 
-@app.route("/metadata/<sample>")
-def sample_metadata(sample):
-    """Return the MetaData for a given sample."""
-    sel = [
-        Samples_Metadata.sample,
-        Samples_Metadata.ETHNICITY,
-        Samples_Metadata.GENDER,
-        Samples_Metadata.AGE,
-        Samples_Metadata.LOCATION,
-        Samples_Metadata.BBTYPE,
-        Samples_Metadata.WFREQ,
-    ]
+@app.route("/census_income_to_rent_dataset/years")
+def years():
+    """Return a list of sample names."""
 
-    results = db.session.query(*sel).filter(Samples_Metadata.sample == sample).all()
+    # Use Pandas to perform the sql query
+    years = census_income_to_rent_dataset['YEAR'].drop_duplicates()
 
-    # Create a dictionary entry for each row of metadata information
-    sample_metadata = {}
-    for result in results:
-        sample_metadata["sample"] = result[0]
-        sample_metadata["ETHNICITY"] = result[1]
-        sample_metadata["GENDER"] = result[2]
-        sample_metadata["AGE"] = result[3]
-        sample_metadata["LOCATION"] = result[4]
-        sample_metadata["BBTYPE"] = result[5]
-        sample_metadata["WFREQ"] = result[6]
-
-    print(sample_metadata)
-    return jsonify(sample_metadata)
+    # Return a list of the column names (sample names)
+    # return jsonify(list(df.columns)[2:])
+    return jsonify(list(years))
 
 
-@app.route("/samples/<sample>")
-def samples(sample):
-    """Return `otu_ids`, `otu_labels`,and `sample_values`."""
-    stmt = db.session.query(Samples).statement
-    df = pd.read_sql_query(stmt, db.session.bind)
+# @app.route("/metadata/<sample>")
+# def sample_metadata(sample):
+#     """Return the MetaData for a given sample."""
+#     sel = [
+#         Samples_Metadata.sample,
+#         Samples_Metadata.ETHNICITY,
+#         Samples_Metadata.GENDER,
+#         Samples_Metadata.AGE,
+#         Samples_Metadata.LOCATION,
+#         Samples_Metadata.BBTYPE,
+#         Samples_Metadata.WFREQ,
+#     ]
+#
+#     results = db.session.query(*sel).filter(Samples_Metadata.sample == sample).all()
+#
+#     # Create a dictionary entry for each row of metadata information
+#     sample_metadata = {}
+#     for result in results:
+#         sample_metadata["sample"] = result[0]
+#         sample_metadata["ETHNICITY"] = result[1]
+#         sample_metadata["GENDER"] = result[2]
+#         sample_metadata["AGE"] = result[3]
+#         sample_metadata["LOCATION"] = result[4]
+#         sample_metadata["BBTYPE"] = result[5]
+#         sample_metadata["WFREQ"] = result[6]
+#
+#     print(sample_metadata)
+#     return jsonify(sample_metadata)
 
-    # Filter the data based on the sample number and
-    # only keep rows with values above 1
-    sample_data = df.loc[df[sample] > 1, ["otu_id", "otu_label", sample]]
 
-    # Sort by sample
-    sample_data.sort_values(by=sample, ascending=False, inplace=True)
+# @app.route("/census_income_to_rent_dataset/<sample>")
+# def samples(sample):
+#     """Return `otu_ids`, `otu_labels`,and `sample_values`."""
+#     stmt = db.session.query(Samples).statement
+#     df = pd.read_sql_query(stmt, db.session.bind)
+#
+#     # Filter the data based on the sample number and
+#     # only keep rows with values above 1
+#     sample_data = df.loc[df[sample] > 1, ["otu_id", "otu_label", sample]]
+#
+#     # Sort by sample
+#     sample_data.sort_values(by=sample, ascending=False, inplace=True)
+#
+#     # Format the data to send as json
+#     data = {
+#         "otu_ids": sample_data.otu_id.values.tolist(),
+#         "sample_values": sample_data[sample].values.tolist(),
+#         "otu_labels": sample_data.otu_label.tolist(),
+#     }
+#     return jsonify(data)
 
-    # Format the data to send as json
-    data = {
-        "otu_ids": sample_data.otu_id.values.tolist(),
-        "sample_values": sample_data[sample].values.tolist(),
-        "otu_labels": sample_data.otu_label.tolist(),
-    }
-    return jsonify(data)
+
+@app.route('/story1/')
+def story1():
+    return render_template('story1.html')
+
+
+@app.route('/story2/')
+def story2():
+    return render_template('story2.html')
+
+
+@app.route('/story3/')
+def story3():
+    return render_template('story3.html')
+
+
+@app.route('/story4/')
+def story4():
+    return render_template('story4.html')
+
+
+@app.route('/data/')
+def data():
+    return render_template('data.html')
+
+@app.route('/team/')
+def team():
+    return render_template('team.html')
 
 
 if __name__ == "__main__":

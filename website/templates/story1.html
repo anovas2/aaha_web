@@ -10,8 +10,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="css/style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </head>
 
@@ -19,7 +19,7 @@
    <!-- Nav start-->
    <div class="container-fluid">
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
-              <a class="navbar-brand" href="#"><img style="width:80px;height:80px;" src="images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png" alt="thinking icon"></a>
+              <a class="navbar-brand" href="#"><img style="width:80px;height:80px;" src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}" alt="thinking icon"></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -27,21 +27,21 @@
               <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto btn-style ">
                   <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About the Team</a>
+                    <a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
                   </li>
                   <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Data Stories
                           </a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="story1.html">Big Picture</a>
-                              <a class="dropdown-item" href="story2.html">Realities</a>
-                              <a class="dropdown-item" href="story3.html">Story #3</a>
-                              <a class="dropdown-item" href="story4.html">Story #4</a>
-                              <a class="dropdown-item" href="data.html">Data Used</a>
+                              <a class="dropdown-item" href="{{ url_for('story1') }}">Big Picture</a>
+                              <a class="dropdown-item" href="{{ url_for('story2') }}">Realities</a>
+                              <a class="dropdown-item" href="{{ url_for('story3') }}">Story #3</a>
+                              <a class="dropdown-item" href="{{ url_for('story4') }}">Story #4</a>
+                              <a class="dropdown-item" href="{{ url_for('data') }}">Data Used</a>
                           </div>
                   </li>
                 </ul>
