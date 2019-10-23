@@ -9,9 +9,15 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
 
+
+		
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+		
+
 
 </head>
 
@@ -19,7 +25,7 @@
    <!-- Nav start-->
    <div class="container-fluid">
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
-              <a class="navbar-brand" href="#"><img style="width:80px;height:80px;" src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}" alt="thinking icon"></a>
+              <a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;" src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}" alt="thinking icon"></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -37,15 +43,13 @@
                             Data Stories
                           </a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="{{ url_for('story1') }}">Big Picture</a>
-                              <a class="dropdown-item" href="{{ url_for('story2') }}">Realities</a>
-                              <a class="dropdown-item" href="{{ url_for('story3') }}">Story #3</a>
-                              <a class="dropdown-item" href="{{ url_for('story4') }}">Story #4</a>
-                              <a class="dropdown-item" href="{{ url_for('data') }}">Data Used</a>
+                              <a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
+                              <a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
+                              <a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
                           </div>
                   </li>
                 </ul>
-                <a class="navbar-brand" href="#" style="color: #F1C40F ;">AAHA Analytics</a>
+                <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
               </div>
               
             </nav>
@@ -67,21 +71,25 @@
                         </div>
                   </div>
                   </div>
-                              <div class="container" style="margin: 50px; left: 600px;">  
+                              <div class="container" >  
               <div class="row align-items-center">
-                  <div class="col-10">
-				  <div class='tableauPlaceholder' id='viz1571786739631' style='position: relative;margin: auto'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AA&#47;AAHAWebProject-Story1StoryVersion&#47;Story1-Whatshappeningwithrenters&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='AAHAWebProject-Story1StoryVersion&#47;Story1-Whatshappeningwithrenters' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AA&#47;AAHAWebProject-Story1StoryVersion&#47;Story1-Whatshappeningwithrenters&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1571786739631');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1016px';vizElement.style.height='991px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
-                  </div>
+                  <div class="col-12">
+				  <div class="tb1" id="tb1"> </div>
+				  <center>
+<div class='tableauPlaceholder' id='viz1571786739631' style='margin: auto;'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AA&#47;AAHAWebProject-Story1StoryVersion&#47;Story1-Whatshappeningwithrenters&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='margin:auto;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='AAHAWebProject-Story1StoryVersion&#47;Story1-Whatshappeningwithrenters' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AA&#47;AAHAWebProject-Story1StoryVersion&#47;Story1-Whatshappeningwithrenters&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1571786739631');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1016px';vizElement.style.height='991px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+</center>                 
+				 </div>
               </div>
-            </div>  
+            </div>  <br><br><br>
               <div class="container">
                   <div class="row">
                       <div class="col-4">
                         <div class="list-group" id="list-tab" role="tablist">
-                          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Point 1</a>
-                          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Point 2</a>
-                          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Point 3</a>
-                          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Point 4</a>
+                          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Change in household income types</a>
+                          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">% income spent on rent</a>
+                          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Rent burden over time</a>
+                          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Change in rent burden status</a>
                         </div>
                       </div>
                       <div class="col-8">
@@ -127,13 +135,10 @@
               <!-- Footer container-->
                   <div class="container-fluid bottomFooter">
                     <div class="row ">
-                      <div class="col-4">
-                          <span style="color: #2874A6 ;">copyright info © 2019 AAHA Analytics firm</span>  
+                      <div class="col-6">
+                          <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>  
                       </div>
-                      <div class="col-4">
-                          <span style="color: #2874A6 ;">One of three columns</span> 
-                      </div>
-                      <div class="col-4">
+                      <div class="col-6">
                           <span style="color: #2874A6 ;">Media:</span>  <br>
                           <a href="#" style="color: #F1C40F ;">@Facebook</a><br>
                           <a href="#" style="color: #F1C40F ;">@GitHub</a><br>
@@ -149,6 +154,9 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>       
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
