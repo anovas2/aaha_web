@@ -43,7 +43,7 @@ cursor = connection.cursor()
 #
 #
 
-census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
+# census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
 
 
 # census_dataset = queries.get_df(connection, 'census_dataset')
@@ -59,28 +59,28 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/census_income_to_rent_dataset/income_brackets")
-def incomes():
-    """Return a list of sample names."""
-
-    # Use Pandas to perform the sql query
-    incomes = census_income_to_rent_dataset['Income'].drop_duplicates()
-
-    # Return a list of the column names (sample names)
-    # return jsonify(list(df.columns)[2:])
-    return jsonify(list(incomes))
-
-
-@app.route("/census_income_to_rent_dataset/years")
-def years():
-    """Return a list of sample names."""
-
-    # Use Pandas to perform the sql query
-    years = census_income_to_rent_dataset['YEAR'].drop_duplicates()
-
-    # Return a list of the column names (sample names)
-    # return jsonify(list(df.columns)[2:])
-    return jsonify(list(years))
+# @app.route("/census_income_to_rent_dataset/income_brackets")
+# def incomes():
+#     """Return a list of sample names."""
+#
+#     # Use Pandas to perform the sql query
+#     incomes = census_income_to_rent_dataset['Income'].drop_duplicates()
+#
+#     # Return a list of the column names (sample names)
+#     # return jsonify(list(df.columns)[2:])
+#     return jsonify(list(incomes))
+#
+#
+# @app.route("/census_income_to_rent_dataset/years")
+# def years():
+#     """Return a list of sample names."""
+#
+#     # Use Pandas to perform the sql query
+#     years = census_income_to_rent_dataset['YEAR'].drop_duplicates()
+#
+#     # Return a list of the column names (sample names)
+#     # return jsonify(list(df.columns)[2:])
+#     return jsonify(list(years))
 
 
 # @app.route("/metadata/<sample>")
@@ -166,6 +166,7 @@ def team():
 @app.route('/map/')
 def map():
     return render_template('index_map.html')
+
 
 
 if __name__ == "__main__":
