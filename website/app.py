@@ -150,7 +150,7 @@ def story3():
     return render_template('story3.html')
 
 
-@app.route('/story4/')
+@app.route('/map/')
 def story4():
     return render_template('story4.html')
 
@@ -163,9 +163,9 @@ def data():
 def team():
     return render_template('team.html')
 
-@app.route('/map/')
-def map():
-    return render_template('index_map.html')
+# @app.route('/map/')
+# def map():
+#     return render_template('index_map.html')
 
 
 
