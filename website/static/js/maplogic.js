@@ -101,15 +101,20 @@ function init() {
     // Use the first sample from the list to build the initial plots
     buildmap(choice);
 
-  
 }
 
-function handleClick(choice) {
+function optionChanged(choice) {
   // Fetch new data each time a new sample is selected
+  var incomelevel = document.getElementById('selDataIncome').options[document.getElementById('selDataIncome').selectedIndex].value;
+  //var year = document.getElementById('selDataIncome').options[document.getElementById('selDataYear').selectedIndex].value;
+  //var burden = document.getElementById('selDataIncome').options[document.getElementById('selDataBurden').selectedIndex].value;
+
     geojson.clearLayers()
+    d3.select(".legend").remove();
+
     //legend.clearLayers()
     // Creating map object
-
+    var choice = incomelevel
   buildmap(choice);
   
 }
