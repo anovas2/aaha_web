@@ -14,7 +14,6 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 
-
 // Load in geojson data
 var geoData = "../static/js/metroatlanta.geojson";
 
@@ -27,7 +26,7 @@ function buildmap(choice) {
   console.log(choice)
 // Grab data with d3
 d3.json(geoData, function(data) {
-  console.log(data)
+  console.log(choice)
   // Create a new choropleth layer
   geojson = L.choropleth(data, {
 
@@ -96,7 +95,8 @@ d3.json(geoData, function(data) {
 
 function init() {
   // Grab a reference to the dropdown select element
-  var choice = d3.select('input[name="choice"]:checked').node().value;
+  //var choice = d3.select('input[name="choice"]:checked').node().value;
+  var choice = "HHs";
 
     // Use the first sample from the list to build the initial plots
     buildmap(choice);
@@ -108,6 +108,8 @@ function handleClick(choice) {
   // Fetch new data each time a new sample is selected
     geojson.clearLayers()
     //legend.clearLayers()
+    // Creating map object
+
   buildmap(choice);
   
 }

@@ -163,6 +163,10 @@ def data():
 def team():
     return render_template('team.html')
 
+@app.route('/map/')
+def map():
+    return render_template('index_map.html')
+
 
 if __name__ == "__main__":
     app.run()
