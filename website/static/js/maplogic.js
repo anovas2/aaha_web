@@ -15,13 +15,14 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 // Load in geojson data
-var geoData = "../static/js/metroatlanta.geojson";
+var geoData = "../static/js/metroatlantaall.geojson";
 
 var geojson;
 var legend;
 
-function buildmap(choice) {
-
+function buildmap(year, incomelevel, burdenlevel) {
+  var choice = year + incomelevel + burdenlevel
+  var legendtitle = year + " " + incomelevel + " " + burdenlevel
   //console.log(feature.properties[choice][0]);
   console.log(choice)
 // Grab data with d3
@@ -46,13 +47,13 @@ d3.json(geoData, function(data) {
       // Border color
       color: "#fff",
       weight: 1,
-      fillOpacity: 0.4
+      fillOpacity: 0.3
     },
-
+   
     // Binding a pop-up to each layer NEED TO FIX POPUP
     onEachFeature: function(feature, layer) {
-      layer.bindPopup(feature.properties.NAMELSAD + "<br>" + choice + "<br>" +
-        "" + feature.properties[choice]);
+      layer.bindPopup(feature.properties.NAMELSAD + "<br>" + legendtitle + "<br>" +
+        "" + ((feature.properties[choice]) * 100).toFixed(2) + '%');
     }
   }).addTo(myMap);
 
@@ -67,12 +68,12 @@ d3.json(geoData, function(data) {
     var labels = [];
 
     // Add min & max
-    var legendInfo = "<h1>" + choice + "</h1>" +
+    var legendInfo = "<h4>" + legendtitle + "</h4>" +
       "<div class=\"labels\">" +
         "<div class=\"min\">" + limits[0] + "</div>" +
-        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        "<div class=\"max\">" + ((limits[limits.length - 1]) * 100).toFixed(2) + '%' + "</div>" +
       "</div>";
-
+      
     div.innerHTML = legendInfo;
 
     limits.forEach(function(limit, index) {
@@ -96,16 +97,26 @@ d3.json(geoData, function(data) {
 function init() {
   // Grab a reference to the dropdown select element
   //var choice = d3.select('input[name="choice"]:checked').node().value;
-  var choice = "HHs";
-
+  var incomelevel = document.getElementById('selDataIncome').options[document.getElementById('selDataIncome').selectedIndex].value;
+  var burdenlevel = document.getElementById('selDataBurden').options[document.getElementById('selDataBurden').selectedIndex].value;
+  var year = document.getElementById('selDataYear').options[document.getElementById('selDataYear').selectedIndex].value;
+  console.log(incomelevel)
+  console.log(burdenlevel)
+  console.log(year)
     // Use the first sample from the list to build the initial plots
-    buildmap(choice);
+    buildmap(year, incomelevel, burdenlevel);
 
 }
 
 function optionChanged(choice) {
   // Fetch new data each time a new sample is selected
   var incomelevel = document.getElementById('selDataIncome').options[document.getElementById('selDataIncome').selectedIndex].value;
+  var burdenlevel = document.getElementById('selDataBurden').options[document.getElementById('selDataBurden').selectedIndex].value;
+  var year = document.getElementById('selDataYear').options[document.getElementById('selDataYear').selectedIndex].value;
+  //var text = $( "#selDataIncome option:selected" ).text();
+  console.log(incomelevel)
+  console.log(burdenlevel)
+  console.log(year)
   //var year = document.getElementById('selDataIncome').options[document.getElementById('selDataYear').selectedIndex].value;
   //var burden = document.getElementById('selDataIncome').options[document.getElementById('selDataBurden').selectedIndex].value;
 
@@ -114,8 +125,9 @@ function optionChanged(choice) {
 
     //legend.clearLayers()
     // Creating map object
-    var choice = incomelevel
-  buildmap(choice);
+    
+  
+  buildmap(year, incomelevel, burdenlevel);
   
 }
 
