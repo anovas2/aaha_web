@@ -27,6 +27,7 @@
 		    <!-- Our CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_map.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_arturo.css') }}">
 
        
 
@@ -83,7 +84,55 @@
         <div class="col-sm-12"><center>
           <h3>Explore your Neighborhood Rent Burden</h3>
           <h5>Select from the dropdowns below to see what % of households in your neighborhood have a certain rent burden</h5>
-        </center>
+        
+
+        <button type="button" class="btn btn-secondary" onclick="myFunction()">Show Key</button><br></center>
+
+        <div class="container" id="container-hide">
+          <div class="row">
+              <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                  <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Household income groups key:</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Rent burden groups key:</a>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><h5 class="mt-0 mb-1">Household income groups key:</h5>
+                    <ul>
+                          <li>Household income groups key:<br>
+                            ○ Low income<br>
+                            <p style="margin-left:20px"> 
+                            ■ Less than $10,000<br>
+                            ■ $10,000-$19,999<br>
+                            ■ $20,000-$34,999</p>
+                            ○ Moderate income<br>
+                            <p style="margin-left:20px">■ $35,000-$49,999<br>
+                            ■ $50,000-$74,999</p>
+                            ○ Higher income<br>
+                            <p style="margin-left:20px">■ $75,000-$99,999<br>
+                            ■ $100,000 or more</li>
+                      </ul></div>
+                  <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><h5 class="mt-0 mb-1">Rent burden groups key:</h5>
+                    <ul>
+                            <li>Rent burden groups key:<br>
+                              ● Non rent-burdened<br>
+                              <p style="margin-left:20px">
+                              ○ Less than 20%<br>
+                              ○ 20-24.9%<br>
+                              ○ 25-29.9%</p>
+                              ● Rent burden<br>
+                              <p style="margin-left:20px">
+                              ○ 30-34.9%<br>
+                              ○ 35-39.9%<br>
+                              ○ 40-49.9%</p>
+                              ● Severe rent burden<br>
+                              <p style="margin-left:20px">○ 50% or more</p></li>
+                      </ul></div>
+                </div>
+              </div>
+            </div>
+      </div>
         
         </div>
       </div>
@@ -148,6 +197,7 @@
 
   <script src="{{ url_for('static', filename='js/config.js') }}"></script>	
   <script src="{{ url_for('static', filename='js/maplogic.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/show.js') }}"></script>
 
   <!--<script type="text/javascript" src="{{ url_for('static', filename='js/mapmenu.js') }}"></script>-->
 

@@ -38,3 +38,11 @@ float: left;
     background-image: url("images/First-time-homebuyer-mistakes.jpeg");
 
 }
+
+.list-group-team {
+    text-align: center;
+}
+
+.btn-secondary {
+    margin: 10px;
+}
