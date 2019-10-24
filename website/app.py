@@ -59,7 +59,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/census_income_to_rent_dataset/income_brackets")
+@app.route("/census_income_to_rent_dataset/incomes")
 def incomes():
     """Return a list of sample names."""
 
