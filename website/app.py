@@ -43,7 +43,7 @@ cursor = connection.cursor()
 #
 #
 
-# census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
+census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
 
 
 # census_dataset = queries.get_df(connection, 'census_dataset')
@@ -59,28 +59,40 @@ def index():
     return render_template("index.html")
 
 
-# @app.route("/census_income_to_rent_dataset/income_brackets")
-# def incomes():
-#     """Return a list of sample names."""
-#
-#     # Use Pandas to perform the sql query
-#     incomes = census_income_to_rent_dataset['Income'].drop_duplicates()
-#
-#     # Return a list of the column names (sample names)
-#     # return jsonify(list(df.columns)[2:])
-#     return jsonify(list(incomes))
-#
-#
-# @app.route("/census_income_to_rent_dataset/years")
-# def years():
-#     """Return a list of sample names."""
-#
-#     # Use Pandas to perform the sql query
-#     years = census_income_to_rent_dataset['YEAR'].drop_duplicates()
-#
-#     # Return a list of the column names (sample names)
-#     # return jsonify(list(df.columns)[2:])
-#     return jsonify(list(years))
+@app.route("/census_income_to_rent_dataset/income_brackets")
+def incomes():
+    """Return a list of sample names."""
+
+    # Use Pandas to perform the sql query
+    incomes = census_income_to_rent_dataset['Income'].drop_duplicates()
+
+    # Return a list of the column names (sample names)
+    # return jsonify(list(df.columns)[2:])
+    return jsonify(list(incomes))
+
+
+@app.route("/census_income_to_rent_dataset/burdens")
+def burdens():
+    """Return a list of sample names."""
+
+    # Use Pandas to perform the sql query
+    burdens = census_income_to_rent_dataset['Rent as % of Income'].drop_duplicates()
+
+    # Return a list of the column names (sample names)
+    # return jsonify(list(df.columns)[2:])
+    return jsonify(list(burdens))
+
+
+@app.route("/census_income_to_rent_dataset/years")
+def years():
+    """Return a list of sample names."""
+
+    # Use Pandas to perform the sql query
+    years = census_income_to_rent_dataset['YEAR'].drop_duplicates()
+
+    # Return a list of the column names (sample names)
+    # return jsonify(list(df.columns)[2:])
+    return jsonify(list(years))
 
 
 # @app.route("/metadata/<sample>")
@@ -113,26 +125,31 @@ def index():
 #     return jsonify(sample_metadata)
 
 
-# @app.route("/census_income_to_rent_dataset/<sample>")
-# def samples(sample):
-#     """Return `otu_ids`, `otu_labels`,and `sample_values`."""
-#     stmt = db.session.query(Samples).statement
-#     df = pd.read_sql_query(stmt, db.session.bind)
-#
-#     # Filter the data based on the sample number and
-#     # only keep rows with values above 1
-#     sample_data = df.loc[df[sample] > 1, ["otu_id", "otu_label", sample]]
-#
-#     # Sort by sample
-#     sample_data.sort_values(by=sample, ascending=False, inplace=True)
-#
-#     # Format the data to send as json
-#     data = {
-#         "otu_ids": sample_data.otu_id.values.tolist(),
-#         "sample_values": sample_data[sample].values.tolist(),
-#         "otu_labels": sample_data.otu_label.tolist(),
-#     }
-#     return jsonify(data)
+@app.route("/census_income_to_rent_dataset/<year>/<GEOID>")
+def samples(year, GEOID):
+    """Return `otu_ids`, `otu_labels`,and `sample_values`."""
+    # stmt = db.session.query(Samples).statement
+    # df = pd.read_sql_query(stmt, db.session.bind)
+
+    # Filter the data based on the sample number and
+    # only keep rows with values above 1
+    test = census_income_to_rent_dataset
+    sample_data = census_income_to_rent_dataset[(census_income_to_rent_dataset['YEAR'] == year) & (census_income_to_rent_dataset['GEOID'] == GEOID)]
+
+    # sample_data = df.loc[df[sample] > 1, ["otu_id", "otu_label", sample]]
+
+    # Sort by sample
+    # sample_data.sort_values(by=sample, ascending=False, inplace=True)
+
+    # Format the data to send as json
+    # data = {
+    #     "otu_ids": sample_data.otu_id.values.tolist(),
+    #     "sample_values": sample_data[sample].values.tolist(),
+    #     "otu_labels": sample_data.otu_label.tolist(),
+    # }
+    html = sample_data.to_html(table_id='maptable')
+
+    return html
 
 
 @app.route('/story1/')
