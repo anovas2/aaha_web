@@ -120,7 +120,10 @@ def lat_lon(address):
     # frm = fmr()
     fmr = 1500
     geoid = geo_id(lat,lon)
-    af_rent = af_rent_f(geoid)*.30/12
+    try:
+        af_rent = af_rent_f(geoid)*.30/12
+    except:
+        af_rent = 1000
     burden_data_html = burden_data_f(geoid)
     address_data = {
         "lat": lat,
