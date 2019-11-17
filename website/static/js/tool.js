@@ -9,7 +9,9 @@ function getlatlon() {
         console.log(json);
         resData = json;
         if (resData.error === 1) {
+            // d3.select('#address_place').setAttribute('placeholder', 'Address Not Found or Outside of Metro Atlanta');
             d3.select('#address_place').property('value', 'Address Not Found or Outside of Metro Atlanta');
+
             throw new Error('Address Not Found or Outside of Metro Atlanta');
         }
         d3.select('#address_place').property('value', resData.address);

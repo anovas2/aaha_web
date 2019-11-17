@@ -114,8 +114,7 @@ def lat_lon(address):
     # print(location)
 
     import geocoder
-    location = geocoder.google(address, components="country:US",key='AIzaSyAvdt0CQZUF16HqNup5yfWNxUpz9ts18dw')
-    lat, lon = location.latlng
+
 
 
     # Return a list of the column names (sample names)
@@ -125,6 +124,8 @@ def lat_lon(address):
     # lon = location.longitude
     # # frm = fmr()
     try:
+        location = geocoder.google(address, components="country:US", key='AIzaSyAvdt0CQZUF16HqNup5yfWNxUpz9ts18dw')
+        lat, lon = location.latlng
         geoid = geo_id(lat,lon)
 
         ami = af_rent_f(geoid)
