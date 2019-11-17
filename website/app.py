@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import censusgeocode as cg
 import time
+import model
 
 import queries
 # import geojson
@@ -109,32 +110,55 @@ def lat_lon(address):
 
     # Use Pandas to perform the sql query
 
-    location = geolocator.geocode(address)
+    # location = geolocator.geocode(address)
+    # print(location)
+
+    import geocoder
+    location = geocoder.google(address, components="country:US",key='AIzaSyAvdt0CQZUF16HqNup5yfWNxUpz9ts18dw')
+    lat, lon = location.latlng
 
 
     # Return a list of the column names (sample names)
     # return jsonify(list(df.columns)[2:])
-    # address_data = location.raw
-    lat = location.latitude
-    lon = location.longitude
-    # frm = fmr()
-    fmr = 1500
-    geoid = geo_id(lat,lon)
+    # # address_data = location.raw
+    # lat = location.latitude
+    # lon = location.longitude
+    # # frm = fmr()
     try:
-        af_rent = af_rent_f(geoid)*.30/12
-    except:
-        af_rent = 1000
-    burden_data_html = burden_data_f(geoid)
-    address_data = {
-        "lat": lat,
-        "lon": lon,
-        "geoid": geoid,
-        "fmr" : fmr,
-        "af_rent": af_rent,
-        "address" : location.address,
-        "burden_data_html": burden_data_html,
+        geoid = geo_id(lat,lon)
 
-    }
+        ami = af_rent_f(geoid)
+        af_rent = ami* .30 / 12
+
+        burden_data_html = burden_data_f(geoid)
+
+        fmr = model.run_fmr(lat,lon)
+
+        bed1, bed2, bed3 = model.run_beds(lat,lon)
+
+
+        address_data = {
+            "lat": lat,
+            "lon": lon,
+            "geoid": geoid,
+            "fmr_pretty": '${:,.2f}'.format(int(fmr)),
+            "af_rent_pretty": '${:,.2f}'.format(int(af_rent)),
+            "fmr" : int(fmr),
+            "ami": '${:,.2f}'.format(int(ami)),
+            "af_rent": int(af_rent),
+            "bed1": bed1,
+            "bed2": bed2,
+            "bed3": bed3,
+            "address" : location.address,
+            "burden_data_html": burden_data_html,
+
+        }
+    except Exception as e:
+        address_data = {
+            "error": 1,
+        }
+        print(e)
+
     return jsonify(address_data)
 
 
@@ -152,7 +176,9 @@ def burden_data_f(GEOID):
     burden_data = burden_data.astype(int).astype(str) + '%'
     burden_data = burden_data.reindex(["Low Income", "Med Income", "High Income"])
     burden_data = burden_data[['Low Burden', 'Med Burden', 'High Burden']]
-    burden_data_html = burden_data.to_html()
+    burden_data = pd.DataFrame(burden_data)
+
+    burden_data_html = burden_data.to_html(index_names=False, classes='burden_table')
 
     # burden_data = pd.pivot_table(burden_data, index=['Rent as % of Income'], values=burden_data.HHs, aggfunc='mean')
 

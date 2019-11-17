@@ -29,4 +29,8 @@ geopy==1.20.0
 censusgeocode==0.4.3.post1
 APScheduler==3.6.3
 selenium==3.141.0
+xlrd==1.2.0
+sklearn==0.0
+geocoder==1.38.1
+
 
