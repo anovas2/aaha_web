@@ -178,7 +178,7 @@ def burden_data_f(GEOID):
     burden_data = burden_data[['Low Burden', 'Med Burden', 'High Burden']]
     burden_data = pd.DataFrame(burden_data)
 
-    burden_data_html = burden_data.to_html(index_names=False, classes='burden_table')
+    burden_data_html = burden_data.to_html(index_names=False, classes='table-bordered')
 
     # burden_data = pd.pivot_table(burden_data, index=['Rent as % of Income'], values=burden_data.HHs, aggfunc='mean')
 
