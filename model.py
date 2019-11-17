@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import pickle
+import os
 
 # %matplotlib inline
 # import matplotlib.pyplot as plt
@@ -56,8 +57,13 @@ def model():
 
 def run_fmr(lat,lon):
     variable = 'FairMarketRent_2BR'
-    filename = '../website/db/finalized_model_' + variable + '.sav'
-    loaded_model = pickle.load(open(filename, 'rb'))
+    print(os.getcwd())
+    try:
+        filename = '../website/db/finalized_model_' + variable + '.sav'
+        loaded_model = pickle.load(open(filename, 'rb'))
+    except:
+        filename = 'website/db/finalized_model_' + variable + '.sav'
+        loaded_model = pickle.load(open(filename, 'rb'))
     data = pd.DataFrame({'Latitude': [lat], 'Longitude': [lon]})
     predictions = loaded_model.predict(data)
     print(predictions[0])
@@ -70,8 +76,12 @@ def run_beds(lat,lon):
     variables_beds = ['0-1 BedroomUnits', 'TwoBedroomUnits', 'ThreePlusBedroomUnits']
     data_beds = pd.DataFrame({'Size': [], 'Beds': []})
     for variable in variables_beds:
-        filename = '../website/db/finalized_model_' + variable + '.sav'
-        loaded_model = pickle.load(open(filename, 'rb'))
+        try:
+            filename = '../website/db/finalized_model_' + variable + '.sav'
+            loaded_model = pickle.load(open(filename, 'rb'))
+        except:
+            filename = 'website/db/finalized_model_' + variable + '.sav'
+            loaded_model = pickle.load(open(filename, 'rb'))
         data = pd.DataFrame({'Latitude': [lat], 'Longitude': [lon]})
         predictions = loaded_model.predict(data)
 
