@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Affordable Housing</title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-1.49.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Leaflet CSS & JS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+          integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+            integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+            crossorigin=""></script>
+
+    <!-- d3 JavaScript -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Leaflet-Choropleth JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/choropleth.js') }}"></script>
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_map.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_arturo.css') }}">
+
+
+</head>
+
+<body>
+<!-- Nav start-->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+        <a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;"
+                                                                   src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}"
+                                                                   alt="thinking icon"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto btn-style ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Data Stories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
+                        <a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
+                        <a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
+                        <a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
+                    </div>
+                </li>
+            </ul>
+            <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
+        </div>
+
+    </nav>
+    <!-- Nav end-->
+    <!-- Beginning container-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
+                <h1>Achieving Affordable Housing in Atlanta</h1>
+                {#                <p style="color: white;">Use the interactive charts below to explore the dataset</p>#}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12" align="center">
+
+            <h3>Affordable Housing Property Proposal Analysis Tool</h3>
+            <h5>Enter an address below to obtain details about potential property's impact </h5>
+
+
+            <div class="form-group">
+                {#                <label for="address">Address</label>#}
+                <input type="text" class="form-control" id="address_place" placeholder="Enter address">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="getlatlon()">Submit</button>
+
+
+            <br>
+
+
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <div id="gd"></div>
+
+        </div>
+    </div>
+    <div class="row justify-content-md-center" id="hiderow3" hidden>
+        <div class="col-sm-12" align="center">
+            <div class="row">
+                <div class="col-sm-12" align="center">
+
+                    <h3>Census Tract Rent Burden Characteristics</h3><br>
+                    <br>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" align="center">
+                    <div id="burden_table" class="table" align="center"></div>
+                    <button type="button" class="btn btn-secondary" onclick="myFunction()">Show Key</button>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="container-hide">
+            <div class="row">
+                <div class="col-4">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                           href="#list-home" role="tab" aria-controls="home">Household income groups key:</a>
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                           href="#list-profile" role="tab" aria-controls="profile">Rent burden groups key:</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                             aria-labelledby="list-home-list"><h5 class="mt-0 mb-1">Household income groups key:</h5>
+                            <ul>
+                                <li>Household income groups key:<br>
+                                    ○ Low income<br>
+                                    <p style="margin-left:20px">
+                                        ■ Less than $10,000<br>
+                                        ■ $10,000-$19,999<br>
+                                        ■ $20,000-$34,999</p>
+                                    ○ Moderate income<br>
+                                    <p style="margin-left:20px">■ $35,000-$49,999<br>
+                                        ■ $50,000-$74,999</p>
+                                    ○ Higher income<br>
+                                    <p style="margin-left:20px">■ $75,000-$99,999<br>
+                                        ■ $100,000 or more</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="list-profile" role="tabpanel"
+                             aria-labelledby="list-profile-list"><h5 class="mt-0 mb-1">Rent burden groups key:</h5>
+                            <ul>
+                                <li>Rent burden groups key:<br>
+                                    ● Non rent-burdened<br>
+                                    <p style="margin-left:20px">
+                                        ○ Less than 20%<br>
+                                        ○ 20-24.9%<br>
+                                        ○ 25-29.9%</p>
+                                    ● Rent burden<br>
+                                    <p style="margin-left:20px">
+                                        ○ 30-34.9%<br>
+                                        ○ 35-39.9%<br>
+                                        ○ 40-49.9%</p>
+                                    ● Severe rent burden<br>
+                                    <p style="margin-left:20px">○ 50% or more</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="hiderow2" hidden>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12" align="center">
+
+                    <h3>Area Demographics and Other Information</h3>
+                    <br>
+
+
+                </div>
+            </div>
+            <div id="results">
+                <table class="table center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Property Feature</th>
+                        <th scope="col">Detail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Affordable Rent</td>
+                        <td id="af_rent"></td>
+                    </tr>
+                    <tr>
+                        <td>Fair Market Rent (2 Bed)</td>
+                        <td id="fmr"></td>
+                    </tr>
+                    <tr>
+                        <td>Area Medium Income</td>
+                        <td id="ami"></td>
+                    </tr>
+                    <tr>
+                        <td>Area One Bedroom Percent</td>
+                        <td id="bed1"></td>
+                    </tr>
+                    <tr>
+                        <td>Area Two Bedroom Percent</td>
+                        <td id="bed2"></td>
+                    </tr>
+                    <tr>
+                        <td>Area Three Bedroom Percent</td>
+                        <td id="bed3"></td>
+                    </tr>
+                    <tr>
+                        <td>Full Address</td>
+                        <td id="address"></td>
+                    </tr>
+                    <tr>
+                        <td>Latitude</td>
+                        <td id="lat"></td>
+                    </tr>
+                    <tr>
+                        <td>Longitude</td>
+                        <td id="lon"></td>
+                    </tr>
+                    <tr>
+                        <td>GEOID</td>
+                        <td id="geoid"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+                <br>
+                {#                <table id="myTable" class="table table-striped">#}
+                {#                    <thead>#}
+                {#                    <tr>#}
+                {#                        <th></th>#}
+                {#                        <th></th>#}
+                {#                    </tr>#}
+                {#                    </thead>#}
+                {#                    <tbody>#}
+                {#                    </tbody>#}
+                {#                </table>#}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-md-center" id="hiderow4" hidden>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12" align="center">
+
+                    <h3>Google Maps View of Area</h3>
+                    <br>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="map2" style="clear:both; height:500px;">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="pano2" style="clear:both; height:500px;">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {#    <div class="row">#}
+    {#        <div class="col-sm-3"></div>#}
+    {#  <div class="col-sm-2">#}
+    {#    <div class="form-group">#}
+    {#      <select class="selectpicker form-control" id="selDataYear" title="Year" onchange="optionChanged(this.value)">#}
+    {#        <option>2017</option>#}
+    {#        <option>2016</option>#}
+    {#        <option>2015</option>#}
+    {#		<option>2014</option>#}
+    {#      </select>#}
+    {#    </div>#}
+    {#  </div>#}
+    {#    <div class="col-sm-2">#}
+    {#    <div class="form-group">#}
+    {#      <select class="selectpicker form-control" id="selDataIncome" title="Income Level" onchange="optionChanged(this.value)">#}
+    {#        <option value="LowIncome">Low Income</option>#}
+    {#        <option value="MedIncome">Med Income</option>#}
+    {#        <option value="HighIncome">High Income</option>#}
+    {#      </select>#}
+    {#    </div>#}
+    {#  </div>#}
+    {#    <div class="col-sm-2">#}
+    {#    <div class="form-group">#}
+    {#      <select class="selectpicker form-control" id="selDataBurden" title="Rent Burden" onchange="optionChanged(this.value)">#}
+    {#        <option value="LowBurden">Low Burden</option>#}
+    {#        <option value="MedBurden">Med Burden</option>#}
+    {#        <option value="HighBurden">High Burden</option>#}
+    {#      </select>#}
+    {#    </div>#}
+    {#  </div>#}
+    {#  <div class="col-sm-3"></div>#}
+    {#</div>#}
+</div>
+
+
+<!-- end container-->
+<!-- Footer container
+    <div class="container-fluid bottomFooter">
+      <div class="row ">
+        <div class="col-6">
+            <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+        </div>
+        <div class="col-6">
+            <span style="color: #2874A6 ;">Media:</span>  <br>
+            <a href="#" style="color: #F1C40F ;">@Facebook</a><br>
+            <a href="#" style="color: #F1C40F ;">@GitHub</a><br>
+            <a href="#" style="color: #F1C40F ;">@Twitter</a>
+        </div>
+      </div>
+
+</div>   -->
+
+<!-- Footer end-->
+<!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>-->
+
+
+<script src="{{ url_for('static', filename='js/config.js') }}"></script>
+<script src="{{ url_for('static', filename='js/maplogic.js') }}"></script>
+<script src="{{ url_for('static', filename='js/show.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/tool.js') }}"></script>
+
+<!--<script type="text/javascript" src="{{ url_for('static', filename='js/mapmenu.js') }}"></script>-->
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>--> +
+{#       <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>#}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvdt0CQZUF16HqNup5yfWNxUpz9ts18dw"
+        async defer></script>
+</body>
+
+
+</html>

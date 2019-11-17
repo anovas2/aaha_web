@@ -46,3 +46,25 @@ float: left;
 .btn-secondary {
     margin: 10px;
 }
+
+#gd {
+  margin-top:20px;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#map_container {
+    width: 100%;
+    height: auto;
+    min-height: valueabove 0;
+    clear: both;
+}
+
+/*html, body, #map2 {*/
+/*        margin: 0;*/
+/*        padding: 0;*/
+/*        height: 100%;*/
+/*    }*/

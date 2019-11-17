@@ -3,11 +3,15 @@ import os
 import sqlite3
 import pandas as pd
 import numpy as np
+import censusgeocode as cg
+import time
+import model
 
 import queries
 # import geojson
 
 from flask import Flask, jsonify, render_template, url_for
+from geopy.geocoders import Nominatim
 
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -44,6 +48,11 @@ cursor = connection.cursor()
 #
 
 census_income_to_rent_dataset = queries.get_df(connection, 'census_income_to_rent_dataset')
+census_dataset = queries.get_df(connection, 'census_dataset')
+
+geolocator = Nominatim()
+
+
 
 
 # census_dataset = queries.get_df(connection, 'census_dataset')
@@ -93,6 +102,128 @@ def years():
     # Return a list of the column names (sample names)
     # return jsonify(list(df.columns)[2:])
     return jsonify(list(years))
+
+
+@app.route("/address_data/<address>")
+def lat_lon(address):
+    """Return a list of sample names."""
+
+    # Use Pandas to perform the sql query
+
+    # location = geolocator.geocode(address)
+    # print(location)
+
+    import geocoder
+    location = geocoder.google(address, components="country:US",key='AIzaSyAvdt0CQZUF16HqNup5yfWNxUpz9ts18dw')
+    lat, lon = location.latlng
+
+
+    # Return a list of the column names (sample names)
+    # return jsonify(list(df.columns)[2:])
+    # # address_data = location.raw
+    # lat = location.latitude
+    # lon = location.longitude
+    # # frm = fmr()
+    try:
+        geoid = geo_id(lat,lon)
+
+        ami = af_rent_f(geoid)
+        af_rent = ami* .30 / 12
+
+        burden_data_html = burden_data_f(geoid)
+
+        fmr = model.run_fmr(lat,lon)
+
+        bed1, bed2, bed3 = model.run_beds(lat,lon)
+
+
+        address_data = {
+            "lat": lat,
+            "lon": lon,
+            "geoid": geoid,
+            "fmr_pretty": '${:,.2f}'.format(int(fmr)),
+            "af_rent_pretty": '${:,.2f}'.format(int(af_rent)),
+            "fmr" : int(fmr),
+            "ami": '${:,.2f}'.format(int(ami)),
+            "af_rent": int(af_rent),
+            "bed1": bed1,
+            "bed2": bed2,
+            "bed3": bed3,
+            "address" : location.address,
+            "burden_data_html": burden_data_html,
+
+        }
+    except Exception as e:
+        address_data = {
+            "error": 1,
+        }
+        print(e)
+
+    return jsonify(address_data)
+
+
+# @app.route("/burden_data/<address>")
+def burden_data_f(GEOID):
+    """Return a list of sample names."""
+
+    # Use Pandas to perform the sql query
+    burden_data = census_income_to_rent_dataset[(census_income_to_rent_dataset['GEOID']==int(GEOID)) & (census_income_to_rent_dataset['YEAR']==2017)].drop(columns=['GEOID','YEAR'])
+    # burden_data.to_clipboard(excel=True)
+    # burden_data = burden_data.groupby(['HHs']).mean().T
+    burden_data = burden_data.pivot(columns='Rent as % of Income', values='HHs', index='Income')
+    total_hhs = burden_data.to_numpy().sum()
+    burden_data = burden_data.div(total_hhs)*100
+    burden_data = burden_data.astype(int).astype(str) + '%'
+    burden_data = burden_data.reindex(["Low Income", "Med Income", "High Income"])
+    burden_data = burden_data[['Low Burden', 'Med Burden', 'High Burden']]
+    burden_data = pd.DataFrame(burden_data)
+
+    burden_data_html = burden_data.to_html(index_names=False, classes='table-bordered')
+
+    # burden_data = pd.pivot_table(burden_data, index=['Rent as % of Income'], values=burden_data.HHs, aggfunc='mean')
+
+    # burden_data = pd.crosstab(burden_data['Rent as % of Income'],burden_data['Income'],values=burden_data.HHs, aggfunc='mean').apply(lambda r: r/r.sum(), axis=1)
+    # burden_data = pd.crosstab(burden_data['Rent as % of Income'], burden_data['Income'])
+
+    # burden_data = pd.pivot_table(burden_data, values='HHs', index=['GEOID', 'YEAR'], columns=['Income','Rent as % of Income'], aggfunc=np.sum)
+
+    # Return a list of the column names (sample names)
+    # return jsonify(list(df.columns)[2:])
+    # address_data = location.raw
+    # lat = location.latitude
+    # lon = location.longitude
+    # # frm = fmr()
+    # fmr = 1500
+    # geoid = geo_id(lat,lon)
+    # address_data = {
+    #     "lat": lat,
+    #     "lon": lon,
+    #     "geoid": geoid,
+    #     "fmr" : fmr,
+    #     "address" : location.address,
+    # }
+    return burden_data_html
+
+
+def af_rent_f(GEOID):
+    af_rent = census_dataset[census_dataset['GEOID']==int(GEOID)]['MedianIncomeHH']
+    return int(af_rent)
+
+
+def geo_id(lat, lon, retries=0):
+    if retries > 10: return
+    try:
+        geoid = cg.coordinates(x=lon, y=lat)['Census Tracts'][0]['GEOID']
+        if not geoid:
+            raise ValueError('A very specific bad thing happened.')
+        return geoid
+    except:
+        retries += 1
+        time.sleep(retries)
+        geoid = geo_id(lat, lon, retries)
+        return geoid
+
+
 
 
 # @app.route("/metadata/<sample>")
@@ -170,6 +301,11 @@ def story3():
 @app.route('/map/')
 def story4():
     return render_template('story4.html')
+
+
+@app.route('/tool/')
+def tool():
+    return render_template('tool.html')
 
 
 @app.route('/data/')
