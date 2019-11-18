@@ -317,6 +317,10 @@ def data():
 def team():
     return render_template('team.html')
 
+@app.route('/about/')
+def team():
+    return render_template('about.html')
+
 # @app.route('/map/')
 # def map():
 #     return render_template('index_map.html')
