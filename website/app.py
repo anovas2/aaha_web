@@ -317,9 +317,32 @@ def data():
 def team():
     return render_template('team.html')
 
+@app.route('/about/')
+def team():
+    return render_template('about.html')
+
 # @app.route('/map/')
 # def map():
 #     return render_template('index_map.html')
+
+@app.route('/samplesite1/')
+def samplesite1():
+    return render_template('samplesite1.html')
+
+
+@app.route('/samplesite2/')
+def samplesite2():
+    return render_template('samplesite2.html')
+
+
+@app.route('/samplesite3/')
+def samplesite3():
+    return render_template('samplesite3.html')
+
+
+@app.route('/samplesite4/')
+def samplesite4():
+    return render_template('samplesite4.html')
 
 
 
