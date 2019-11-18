@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>East Cobb Park</name>
+	<Placemark id="09F9A2DD1A0FAD66DB27">
+		<name>East Cobb Park</name>
+		<gx:mid>/g/1tg5vxb9</gx:mid>
+		<gx:fid>0x88f51264bc3b0b05:0x9f1f506f421c5862</gx:fid>
+		<LookAt>
+			<longitude>-84.452741</longitude>
+			<latitude>33.9778026</latitude>
+			<altitude>279.4600134272202</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>858.207855101744</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>file://earth/14685707377821866684#__managed_style_0BCB5ED0AD0FAD6641B3</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-84.452741,33.9778026,0</coordinates>
+		</Point>
+	</Placemark>
+</Document>
+</kml>

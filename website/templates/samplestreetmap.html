@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Street View Side-By-Side</title>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Affordable Housing</title>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+		
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map, #pano {
+        float: left;
+        height: 50%;
+        width: 50%;
+		margin-bottom: 40px;
+		margin-top: 0px;
+      }
+	  .infoarea {
+	  margin-bottom:0;
+	  }
+	  .social{
+	  float: left;
+	  margin-left: 20px;
+	  margin-bottom: 50px;
+	  }
+	  .controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+	#searchInput {
+		background-color: #fff;
+		font-family: Roboto;
+		font-size: 15px;
+		font-weight: 300;
+		margin-left: 12px;
+		padding: 0 11px 0 13px;
+		text-overflow: ellipsis;
+		width: 50%;
+	}
+	#searchInput:focus {
+		border-color: #4d90fe;
+	}
+    </style>
+  </head>
+  <body>
+   <!-- Nav start-->
+   <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+              <a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;" src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}" alt="thinking icon"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto btn-style ">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Data Stories
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
+                              <a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
+                              <a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
+                              <a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
+                          </div>
+                  </li>
+				  <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Building Consulting Services
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{{ url_for('Tool') }}">Building Tool</a>
+                              <a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
+                              <a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
+                              <a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
+							  <a class="dropdown-item" href="{{ url_for('samplesite4') }}">Proposed Building Site 4</a>
+                          </div>
+                  </li>
+                </ul>
+                <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
+              </div>
+              
+            </nav>
+            <!-- Nav end-->
+            <!-- Beginning container-->
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
+                  <h1>Achieving Affordable Housing in Atlanta</h1>
+                  <p style="color: white;">Use the interactive charts below to explore the dataset</p>
+                </div>
+              </div>
+            </div>
+			
+                 <div class="container" >  
+              <div class="row align-items-center">
+                  <div class="col-12">
+				<input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+			  </div>
+				</div>
+              </div>
+            </div> 
+								<!--maps-->
+								<div id="map"></div>
+								<div id="pano"></div>
+								<!--maps end-->
+
+    <script>
+      function initialize() {
+		var fenway = {lat: 42.345573, lng: -71.098326};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: fenway,
+          zoom: 14
+        });
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('pano'), {
+              position: fenway,
+              pov: {
+                heading: 34,
+                pitch: 10
+              }
+            });
+        map.setStreetView(panorama);
+		
+		//Search items logic inside initialize fuction start 1st map
+		var input = document.getElementById('searchInput');
+		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+		var autocomplete = new google.maps.places.Autocomplete(input);
+		autocomplete.bindTo('bounds', map);
+		
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker({
+			map: map,
+			anchorPoint: new google.maps.Point(0, -29)
+		});
+
+		autocomplete.addListener('place_changed', function() {
+			infowindow.close();
+			marker.setVisible(false);
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				window.alert("Autocomplete's returned place contains no geometry");
+				return;
+			}
+			  
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+				map.fitBounds(place.geometry.viewport);
+			} else {
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);
+			}
+			marker.setIcon(({
+				url: place.icon,
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+		
+			var address = '';
+			if (place.address_components) {
+				address = [
+				  (place.address_components[0] && place.address_components[0].short_name || ''),
+				  (place.address_components[1] && place.address_components[1].short_name || ''),
+				  (place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+			}
+		
+			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+			infowindow.open(map, marker);
+ 
+			//Location details
+			for (var i = 0; i < place.address_components.length; i++) {
+				if(place.address_components[i].types[0] == 'postal_code'){
+					document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+				}
+				if(place.address_components[i].types[0] == 'country'){
+					document.getElementById('country').innerHTML = place.address_components[i].long_name;
+				}
+			}
+			document.getElementById('location').innerHTML = place.formatted_address;
+			document.getElementById('lat').innerHTML = place.geometry.location.lat();
+			document.getElementById('lon').innerHTML = place.geometry.location.lng();
+		}); //Search items logic inside initialize fuction end
+      }
+    </script>
+	   
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyHFD38A6CsWBFRZX_I-fHE9fnL50UUQE&libraries=places&callback=initialize" async defer></script>
+	
+		<div class="container" >  
+              <div class="row align-items-center">
+                  <div class="col-12">		  
+					 <h4>Location Details</h4>			  
+				</div>
+				</div>
+              </div>
+			  
+	<!-- Narrative layer Begin-->
+	 <div class="container infoarea">
+                  <div class="row">
+                      <div class="col-4">
+                        <div class="list-group" id="list-tab" role="tablist">
+                          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Change in household income types</a>
+                          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">% income spent on rent</a>
+                          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Rent burden over time</a>
+                          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Change in rent burden status</a>
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div class="tab-content" id="nav-tabContent">
+                          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><h5 class="mt-0 mb-1">What's happening with renters?, 2014-2018</h5>
+                            <strong> <i>Change in household income type</i></strong> 
+                            <ul>
+                                <li>2014-2017 has seen an upward Influx of moderate to higher-income households into the Metro ATL area.</li>
+                                <li>The same time period has seen a decline of low-income households in the Metro ATL area.</li>
+                                <li>In order to isolate these simple household income groupings, we calculated groups based on Atlanta’s
+                                  Area Median Income, then aligned those with the income brackets used by the U.S. Census.</li>
+                                  <li>Household income groups key:<br>
+                                    ○ Low income<br>
+                                    <p style="margin-left:20px"> 
+                                    ■ Less than $10,000<br>
+                                    ■ $10,000-$19,999<br>
+                                    ■ $20,000-$34,999</p>
+                                    ○ Moderate income<br>
+                                    <p style="margin-left:20px">■ $35,000-$49,999<br>
+                                    ■ $50,000-$74,999</p>
+                                    ○ Higher income<br>
+                                    <p style="margin-left:20px">■ $75,000-$99,999<br>
+                                    ■ $100,000 or more</li>
+                              </ul></div>
+                          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><h5 class="mt-0 mb-1">What's happening with renters?, 2014-2018</h5>
+                            <strong> <i>% income spent on rent</i></strong> 
+                            <ul>
+                                <li>Though housing cost burden is a challenge for many, the data shows
+                                    that, on average across Metro ATL from 2014-2017, severe rent burden among those with low incomes
+                                    is most prevalent, while non rent burden among those with the higher incomes is also prevalent,
+                                    highlighting a disproportionate cost burden between the two.</li>
+                                <li>Decline of low-income households in the Metro ATL area</li>
+                                <li> Rental cost burden is grouped according
+                                    to the city’s--and widely-accepted--classifications of cost burden and the Census brackets denoting % of
+                                    household income spent on rent:</li>
+                                    <li>Rent burden groups key:<br>
+                                      ● Non rent-burdened<br>
+                                      <p style="margin-left:20px">
+                                      ○ Less than 20%<br>
+                                      ○ 20-24.9%<br>
+                                      ○ 25-29.9%</p>
+                                      ● Rent burden<br>
+                                      <p style="margin-left:20px">
+                                      ○ 30-34.9%<br>
+                                      ○ 35-39.9%<br>
+                                      ○ 40-49.9%</p>
+                                      ● Severe rent burden<br>
+                                      <p style="margin-left:20px">○ 50% or more</p></li>
+                              </ul></div>
+                          <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list"><h5 class="mt-0 mb-1">What's happening with renters?, 2014-2018</h5>
+                            <strong> <i>Rent burden over time</i></strong> 
+                            <ul>
+                                <li>From 2014-17, there has been disproportionately high rent burden for
+                                    lower income groups in Metro ATL, though slightly declining as low-income households migrate away
+                                    from the city.</li>
+                                <li>Conversely, higher income renters have enjoyed increasingly less rent burden over time,
+                                    even as higher-income households migrate into Metro ATL.</li>
+
+                              </ul></div>
+                          <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list"><h5 class="mt-0 mb-1">What's happening with renters?, 2014-2018</h5>
+                            <strong> <i>Change in rent burden status</i></strong> 
+                            <ul>
+                                <li>In addition to other observations noted above, rent burden has
+                                held strong among low-income renters and climbed slightly among moderate- and higher-income
+                                renters from 2014-2017.</li>
+                                <li>Overall, rental cost burden among renters is more frequent on average across
+                                    Metro ATL than is non rent-burden, which is enjoyed almost exclusively by higher-income renters.</li>
+                              </ul></div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+	<!-- Narrative layer end-->
+              <!-- Footer container-->
+                  <div class="container-fluid bottomFooter">
+                    <div class="row ">
+                      <div class="col-6">
+                          <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>  
+                      </div>
+                      <div class="col-6">
+                          <span style="color: #2874A6 ;">Media:</span>  <br>
+                          <a class = "social" href="#" style="color: #F1C40F;">@Facebook</a>
+                          <a class = "social" href="#" style="color: #F1C40F;">@GitHub</a>
+                          <a class = "social" href="#" style="color: #F1C40F;">@Twitter</a>
+                      </div>
+                    </div>
+                    
+				</div>   
+				<!-- Footer end-->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>       
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+  </body>
+</html>

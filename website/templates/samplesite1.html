@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Street View Side-By-Side</title>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Affordable Housing</title>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+	<script src="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+		
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+	
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map, #pano {
+        float: left;
+        height: 50%;
+        width: 50%;
+		margin-top: 40px;
+		margin-bottom: 40px;
+		
+      }
+	  .infoarea {
+	  margin-bottom:0;
+	  }
+	  .social{
+	  float: left;
+	  margin-left: 20px;
+	  margin-bottom: 50px;
+	  }
+	  .controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+	#searchInput {
+		background-color: #fff;
+		font-family: Roboto;
+		font-size: 15px;
+		font-weight: 300;
+		margin-left: 12px;
+		padding: 0 11px 0 13px;
+		text-overflow: ellipsis;
+		width: 50%;
+	}
+	#searchInput:focus {
+		border-color: #4d90fe;
+	}
+	.bottomFooter{
+		margin-top: 40px;
+	}
+	* {
+  box-sizing: border-box;
+	}
+
+	/* Style inputs */
+	input[type=text], select, textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	resize: vertical;
+	}
+
+	input[type=submit] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	cursor: pointer;
+	}
+
+	input[type=submit]:hover {
+	background-color: #45a049;
+	}
+
+	/* Style the container/contact section */
+	.container {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 10px;
+	}
+
+	/* Create two columns that float next to eachother */
+	.column {
+	float: left;
+	width: 50%;
+	margin-top: 6px;
+	padding: 20px;
+	}
+
+	/* Clear floats after the columns */
+	.row:after {
+	content: "";
+	display: table;
+	clear: both;
+	}
+
+	/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+	@media screen and (max-width: 600px) {
+	.column, input[type=submit] {
+		width: 100%;
+		margin-top: 0;
+	}
+	}
+    </style>
+  </head>
+  <body>
+   <!-- Nav start-->
+   <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+              <a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;" src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}" alt="thinking icon"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto btn-style ">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Data Stories
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
+                              <a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
+                              <a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
+                              <a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
+                          </div>
+                  </li>
+				  <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Building Consulting Services
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{{ url_for('Tool') }}">Building Tool</a>
+                              <a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
+                              <a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
+                              <a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
+							  <a class="dropdown-item" href="{{ url_for('samplesite4') }}">Proposed Building Site 4</a>
+                          </div>
+                  </li>
+                </ul>
+                <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
+              </div>
+              
+            </nav>
+            <!-- Nav end-->
+            <!-- Beginning container-->
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
+                  <h1>Achieving Affordable Housing in Atlanta</h1>
+                  <p style="color: white;">Use the interactive charts below to explore the dataset</p>
+                </div>
+              </div>
+			</div>
+			
+			<!-- Tableau Data-->
+	
+	<div class='tableauPlaceholder' id='viz1573767404615' style='position: static; float: right;'>
+			<noscript>
+			<a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiBikeSeniors&#47;YoyTrendsStory&#47;1_rss.png' style='border: none' /></a>
+			</noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+				<param name='embed_code_version' value='3' /> <param name='site_root' value='' />
+				<param name='name' value='CitiBikeSeniors&#47;YoyTrendsStory' /><param name='tabs' value='no' />
+				<param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiBikeSeniors&#47;YoyTrendsStory&#47;1.png' />
+				<param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' />
+				<param name='display_count' value='yes' /></object></div>                
+				<script type='text/javascript'>                    
+					var divElement = document.getElementById('viz1573767404615'); 
+					var vizElement = divElement.getElementsByTagName('object')[0];                    
+					vizElement.style.width='600px';vizElement.style.height='600px';                    
+					var scriptElement = document.createElement('script');                    
+					scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+					vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+				</script>
+				
+			<!-- Tableau Data End-->
+			
+			<p><h2>3D Earth Address Review</h2></p>
+			<!-- New 3d earth map  -->
+		<div class="container-fluid align-items-center">
+			<div class="row align-items-center">
+				<div class="col-12">
+
+				
+			<div id="cesiumContainer" style="width: 600px; height:600px; position: static; left: 0; 
+			top: 50%; text-align: center; font-size: 18px;"></div>
+			
+			<script>
+				var czml = [{
+						"id" : "document",
+						"name" : "CZML Geometries: Circles and Ellipses",
+						"version" : "1.0"
+					}, {
+						"id" : "shape1",
+						"name" : "Green circle at height",
+						"position" : {
+							"cartographicDegrees" : [-111.0, 40.0, 150000.0]
+						},
+						"ellipse" : {
+							"semiMinorAxis" : 300000.0,
+							"semiMajorAxis" : 300000.0,
+							"height" : 200000.0,
+							"material" : {
+								"solidColor" : {
+									"color" : {
+										"rgba" : [0, 255, 0, 255]
+									}
+								}
+							}
+						}
+					}, {
+						"id" : "shape2",
+						"name" : "Red ellipse with white outline on surface",
+						"position" : {
+						"cartographicDegrees" : [-103.0, 40.0, 0]
+						},
+						"ellipse" : {
+							"semiMinorAxis" : 250000.0,
+							"semiMajorAxis" : 400000.0,
+							"height" : 0,
+							"material" : {
+								"solidColor" : {
+									"color" : {
+										"rgba" : [255, 0, 0, 127]
+									}
+								}
+							},
+							"outline" : true, // height must be set for outlines to display
+							"outlineColor" : {
+								"rgba" : [255, 255, 255, 255]
+							}
+						}
+					}, {
+						"id" : "shape3",
+						"name" : "Blue translucent, rotated, and extruded ellipse with outline",
+						"position" : {
+							"cartographicDegrees" : [-95.0, 40.0, 100000.0]
+						},
+						"ellipse" : {
+							"semiMinorAxis" : 150000.0,
+							"semiMajorAxis" : 300000.0,
+							"extrudedHeight" : 200000.0,
+							"rotation" : 0.78539,
+							"material" : {
+								"solidColor" : {
+									"color" : {
+										"rgba" : [0, 0, 255, 127]
+									}
+								}
+							},
+							"outline" : true
+						}
+					}];
+
+
+
+					Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMDJkZGQ5OC00ZTVmLTQ0YzEtYmZiZC1lN2NkZWJlNmFmMjUiLCJpZCI6MTg1MTksInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzM5NzM1NjJ9.XmJVznp6mUMpWh17kHxWJg6XzxXH7_ypSKigqucWa4I';
+					var viewer = new Cesium.Viewer('cesiumContainer');
+					var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
+					viewer.dataSources.add(dataSourcePromise);
+					viewer.zoomTo(dataSourcePromise);
+				  </script>
+				</div>
+			</div>
+		</div>
+			<!-- New 3d earth map end -->
+
+			
+
+<div class="container-fluid">
+	<div class="row align-items-center">
+		<div class="col-12">
+			<div id="valuesArea" style="width: 1000px; height:800px; background-color: #d4d4d4; margin: 40px; padding: 30px;">
+				<p>
+					FMR: <br>
+					Housing Authority in area: <br>
+					Amenities: <br>
+
+					<div style="text-align:center">
+							<h2>Contact Us</h2>
+							<p>Swing by for a cup of coffee, or leave us a message:</p>
+						  </div>
+						  <div class="row">
+							<div class="column">
+							  <img src="/w3images/map.jpg" style="width:100%">
+							</div>
+							<div class="column">
+							  <form action="/action_page.php">
+								<label for="fname">First Name</label>
+								<input type="text" id="fname" name="firstname" placeholder="Your name..">
+								<label for="lname">Last Name</label>
+								<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+								<label for="country">Country</label>
+								<select id="country" name="country">
+								  <option value="australia">Australia</option>
+								  <option value="canada">Canada</option>
+								  <option value="usa">USA</option>
+								</select>
+								<label for="subject">Subject</label>
+								<textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+								<input type="submit" value="Submit">
+							  </form>
+							</div>
+						  </div>
+					
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+                 <div class="container" >  
+              <div class="row align-items-center">
+                  <div class="col-12">
+				<input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+			  </div>
+				</div>
+              </div>
+            </div> 
+								<!--maps-->
+								<div id="map"></div>
+								<div id="pano"></div>
+								<!--maps end-->
+
+    <script>
+      function initialize() {
+		var fenway = {lat: 42.345573, lng: -71.098326};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: fenway,
+          zoom: 14
+        });
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('pano'), {
+              position: fenway,
+              pov: {
+                heading: 34,
+                pitch: 10
+              }
+            });
+        map.setStreetView(panorama);
+		
+		//Search items logic inside initialize fuction start 1st map
+		var input = document.getElementById('searchInput');
+		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+		var autocomplete = new google.maps.places.Autocomplete(input);
+		autocomplete.bindTo('bounds', map);
+		
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker({
+			map: map,
+			anchorPoint: new google.maps.Point(0, -29)
+		});
+
+		autocomplete.addListener('place_changed', function() {
+			infowindow.close();
+			marker.setVisible(false);
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				window.alert("Autocomplete's returned place contains no geometry");
+				return;
+			}
+			  
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+				map.fitBounds(place.geometry.viewport);
+			} else {
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);
+			}
+			marker.setIcon(({
+				url: place.icon,
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+		
+			var address = '';
+			if (place.address_components) {
+				address = [
+				  (place.address_components[0] && place.address_components[0].short_name || ''),
+				  (place.address_components[1] && place.address_components[1].short_name || ''),
+				  (place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+			}
+		
+			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+			infowindow.open(map, marker);
+ 
+			//Location details
+			for (var i = 0; i < place.address_components.length; i++) {
+				if(place.address_components[i].types[0] == 'postal_code'){
+					document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+				}
+				if(place.address_components[i].types[0] == 'country'){
+					document.getElementById('country').innerHTML = place.address_components[i].long_name;
+				}
+			}
+			document.getElementById('location').innerHTML = place.formatted_address;
+			document.getElementById('lat').innerHTML = place.geometry.location.lat();
+			document.getElementById('lon').innerHTML = place.geometry.location.lng();
+		}); //Search items logic inside initialize fuction end
+      }
+    </script>
+	   
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyHFD38A6CsWBFRZX_I-fHE9fnL50UUQE&libraries=places&callback=initialize" async defer></script>
+	
+		<div class="container" >  
+              <div class="row align-items-center">
+                  <div class="col-12">		  
+					 <h4>Location Details</h4>			  
+				</div>
+				</div>
+              </div>
+			  
+	<!-- Narrative layer Begin-->
+	<div class="container" >  
+              <div class="row align-items-center">
+                  <div class="col-12">
+			<ul class="list-unstyled">
+			  <li class="media">
+				<img src="..." class="mr-3" alt="...">
+				<div class="media-body">
+				  <h5 class="mt-0 mb-1">Area FMR</h5>
+				  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+				</div>
+			  </li>
+			  <li class="media my-4">
+				<img src="..." class="mr-3" alt="...">
+				<div class="media-body">
+				  <h5 class="mt-0 mb-1">Affordable Rent</h5>
+				  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+				</div>
+			  </li>
+			  <li class="media">
+				<img src="..." class="mr-3" alt="...">
+				<div class="media-body">
+				  <h5 class="mt-0 mb-1"> Gap (Subsidy needed)</h5>
+				  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+				</div>
+			  </li>
+			  
+			</ul>
+			</div>
+		</div>
+    </div>			
+	
+	
+
+	<!-- Location info layer end-->
+	
+	
+              <!-- Footer container-->
+                  <div class="container-fluid bottomFooter">
+                    <div class="row infoarea">
+                      <div class="col-6">
+                          <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>  
+                      </div>
+                      <div class="col-6">
+                          <span style="color: #2874A6 ;">Media:</span>  <br>
+                          <a class = "social" href="#" style="color: #F1C40F;">@Facebook</a>
+                          <a class = "social" href="#" style="color: #F1C40F;">@GitHub</a>
+                          <a class = "social" href="#" style="color: #F1C40F;">@Twitter</a>
+                      </div>
+                    </div>
+                    
+				</div> 				
+				<!-- Footer end-->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>       
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+  </body>
+</html>
