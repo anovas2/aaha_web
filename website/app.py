@@ -318,7 +318,7 @@ def team():
     return render_template('team.html')
 
 @app.route('/about/')
-def team():
+def about():
     return render_template('about.html')
 
 # @app.route('/map/')
