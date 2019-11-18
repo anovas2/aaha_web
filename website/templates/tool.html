@@ -67,6 +67,21 @@
                         <a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Building Consulting Services
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{ url_for('tool') }}">Building Tool</a>
+                            <a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
+                            <a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
+                            <a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
+                            <a class="dropdown-item" href="{{ url_for('samplesite4') }}">Proposed Building Site 4</a>
+                        </div>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About AAHA Building Corp</a>
+                    </li>
             </ul>
             <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
         </div>
@@ -333,23 +348,22 @@
 
 
 <!-- end container-->
-<!-- Footer container
-    <div class="container-fluid bottomFooter">
-      <div class="row ">
-        <div class="col-6">
-            <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+<!-- Footer container-->
+<div class="container-fluid bottomFooter" style="background-color: #f2f2f2; height: 100px; padding: 20px;">
+        <div class="row infoarea" >
+            <div class="col-6" >
+                <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+            </div>
+            <div class="col-6">
+                <span style="color: #2874A6 ;">Media:</span> <br>
+                <a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
+                <a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
+                <a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
+            </div>
         </div>
-        <div class="col-6">
-            <span style="color: #2874A6 ;">Media:</span>  <br>
-            <a href="#" style="color: #F1C40F ;">@Facebook</a><br>
-            <a href="#" style="color: #F1C40F ;">@GitHub</a><br>
-            <a href="#" style="color: #F1C40F ;">@Twitter</a>
-        </div>
-      </div>
 
-</div>   -->
-
-<!-- Footer end-->
+    </div>
+    <!-- Footer end-->
 <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>-->
 
