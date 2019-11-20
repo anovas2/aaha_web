@@ -75,7 +75,6 @@
                         <a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
                         <a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
                         <a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
-                        <a class="dropdown-item" href="{{ url_for('samplesite4') }}">Proposed Building Site 4</a>
                     </div>
             </li>
             <li class="nav-item">
@@ -107,32 +106,88 @@
                         <img src="{{ url_for('static', filename='images/team.jpg') }}" class="img-fluid" alt="Responsive image">
 
     </div>
-  </div>
-                  <div class="row">
-                      <div class="col-3"></div>
-                      <div class="col-6">   <br><br><br>
-                          <div class="list-group list-group-team">
-                              <a href="#" class="list-group-item list-group-item-action">Alex Novas</a>
-                              <a href="#" class="list-group-item list-group-item-action">Arturo White</a>
-                              <a href="#" class="list-group-item list-group-item-action">Hudson Heatley</a>
-                              <a href="#" class="list-group-item list-group-item-action">Kevin Patterson</a>
-                              <a href="#" class="list-group-item list-group-item-action">Melissa Bader</a>
-                              <a href="#" class="list-group-item list-group-item-action">Sanaz Paran</a>
-                            </div>
+  </div>           
 
-					      </div>
+  <div class="container" style="margin: auto;">
+  <div class="row" style="margin:40px auto;">
+      <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-Alex" role="tab" aria-controls="home">Alex Novas</a>
+          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-Arturo" role="tab" aria-controls="profile">Arturo White</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-Hudson" role="tab" aria-controls="messages">Hudson Heatley</a>
+          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-Kevin" role="tab" aria-controls="settings">Kevin Patterson</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-Melissa" role="tab" aria-controls="messages">Melissa Bader</a>
+          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-Sanaz" role="tab" aria-controls="settings">Sanaz Paran</a>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="list-Alex" role="tabpanel" aria-labelledby="list-home-list"> 
+            <h5>BIO:</h5> <br> 
+              <ul>
+                <li>Profession: </li> <br>
+                <li>Why I am passionate about this project: </li><br>
+                <li>Fun Fact: </li>
+              </ul> 
+          </div>
+          <div class="tab-pane fade" id="list-Arturo" role="tabpanel" aria-labelledby="list-profile-list">
+              <h5>BIO:</h5> <br> 
+              <ul>
+                <li>Profession: <br>
+                  Program Manager for a Medical Device Systems design and manufacturer</li> <br>
+                <li>Why I am passionate about this project: <br>
+                   I am passionate about this project because I see opprotunities for my city to reduce housing problems through targeted spending. </li><br>
+                <li>Fun Fact: <br>
+                  I have 3 rubrix cubes, 1 of which is a competion speed cube. 
+                </li>
+              </ul> 
+          </div>
+          <div class="tab-pane fade" id="list-Hudson" role="tabpanel" aria-labelledby="list-messages-list">
+            <h5>BIO:</h5> <br> 
+              <ul>
+                <li>Profession: </li> <br>
+                <li>Why I am passionate about this project: </li><br>
+                <li>Fun Fact: </li>
+              </ul> 
+          </div>
+          <div class="tab-pane fade" id="list-Kevin" role="tabpanel" aria-labelledby="list-settings-list">
+            <h5>BIO:</h5> <br> 
+              <ul>
+                <li>Profession: </li> <br>
+                <li>Why I am passionate about this project: </li><br>
+                <li>Fun Fact: </li>
+              </ul> 
+          </div>
+          <div class="tab-pane fade" id="list-Melissa" role="tabpanel" aria-labelledby="list-messages-list">
+            <h5>BIO:</h5> <br> 
+              <ul>
+                <li>Profession: </li> <br>
+                <li>Why I am passionate about this project: </li><br>
+                <li>Fun Fact: </li>
+              </ul> 
+          </div>
+          <div class="tab-pane fade" id="list-Sanaz" role="tabpanel" aria-labelledby="list-settings-list">
+            <h5>BIO:</h5> <br> 
+              <ul>
+                <li>Profession: </li> <br>
+                <li>Why I am passionate about this project: </li><br>
+                <li>Fun Fact: </li>
+              </ul> 
+          </div>
+        </div>
+      </div>
+   
+    </div>
   </div>
-</div>
-
-            
+</div>           
    <!-- Footer container-->
-		<div class="container-fluid bottomFooter" style="background-color: #f2f2f2; height: 100px; padding: 20px;">
-        <div class="row infoarea" >
-          <div class="col-6" >
+		<div class="container-fluid " style="background-color: #f2f2f2; height: 100px; padding: 20px;">
+        <div class="row infoarea">
+          <div class="col-6" style="text-align: center;">
             <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
           </div>
           <div class="col-6">
-            <span style="color: #2874A6 ;">Media:</span> <br>
+            <span class="align-content-start" style="color: #2874A6 ;">Media:</span> <br>
             <a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
             <a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
             <a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
@@ -141,6 +196,7 @@
   
       </div>
       <!-- Footer end-->
+
   <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>-->
 

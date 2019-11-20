@@ -146,6 +146,17 @@
 		#street-view {
 			height: 100%;
 		}
+
+		.container {
+			height: 500px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.item {
+			width: 10em;
+		}
 	</style>
 </head>
 
@@ -192,7 +203,6 @@
 							<a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
 							<a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
 							<a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
-							<a class="dropdown-item" href="{{ url_for('samplesite4') }}">Proposed Building Site 4</a>
 						</div>
 					</li>
 					<li class="nav-item">
@@ -216,252 +226,235 @@
 
 
 		<center>
+			<!-- ***Please change text here Property and address below it -->
 			<p>
 				<h2>Property: Multi-Family Residential Property in East Cobb, GA</h2> <br>
 				<h4>3322 Roswell Road, Marietta, GA</h4>
 			</p>
-			<!-- New 3d earth map  -->
-			<div class="container-fluid align-items-center">
-				<div class="row align-items-center">
-					<div class="col-12">
 
-
-						<div id="cesiumContainer" style="width: 900px; height:400px; position: static; left: 0; 
-			top: 50%; text-align: center; font-size: 18px;"></div>
-
-						<script>
-							var czml = [{
-								"id": "document",
-								"name": "CZML Geometries: Circles and Ellipses",
-								"version": "1.0"
-							}, {
-								"id": "shape1",
-								"name": "Green circle at height",
-								"position": {
-									"cartographicDegrees": [-111.0, 40.0, 150000.0]
-								},
-								"ellipse": {
-									"semiMinorAxis": 300000.0,
-									"semiMajorAxis": 300000.0,
-									"height": 200000.0,
-									"material": {
-										"solidColor": {
-											"color": {
-												"rgba": [0, 255, 0, 255]
-											}
-										}
-									}
-								}
-							}, {
-								"id": "shape2",
-								"name": "Red ellipse with white outline on surface",
-								"position": {
-									"cartographicDegrees": [-103.0, 40.0, 0]
-								},
-								"ellipse": {
-									"semiMinorAxis": 250000.0,
-									"semiMajorAxis": 400000.0,
-									"height": 0,
-									"material": {
-										"solidColor": {
-											"color": {
-												"rgba": [255, 0, 0, 127]
-											}
-										}
-									},
-									"outline": true, // height must be set for outlines to display
-									"outlineColor": {
-										"rgba": [255, 255, 255, 255]
-									}
-								}
-							}, {
-								"id": "shape3",
-								"name": "Blue translucent, rotated, and extruded ellipse with outline",
-								"position": {
-									"cartographicDegrees": [-95.0, 40.0, 100000.0]
-								},
-								"ellipse": {
-									"semiMinorAxis": 150000.0,
-									"semiMajorAxis": 300000.0,
-									"extrudedHeight": 200000.0,
-									"rotation": 0.78539,
-									"material": {
-										"solidColor": {
-											"color": {
-												"rgba": [0, 0, 255, 127]
-											}
-										}
-									},
-									"outline": true
-								}
-							}];
-
-							Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMDJkZGQ5OC00ZTVmLTQ0YzEtYmZiZC1lN2NkZWJlNmFmMjUiLCJpZCI6MTg1MTksInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzM5NzM1NjJ9.XmJVznp6mUMpWh17kHxWJg6XzxXH7_ypSKigqucWa4I';
-							var viewer = new Cesium.Viewer('cesiumContainer');
-							var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
-							viewer.dataSources.add(dataSourcePromise);
-							viewer.zoomTo(dataSourcePromise);
-						</script>
-					</div>
-				</div>
-			</div>
 		</center>
-		<!-- New 3d earth map end -->
+
+
+		<!--street view map-->
+
+		<!-- Place embeded map here per instructions/ between center tag!!! -->
+
+		<div style="margin: 40px;">
+			<center>
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3299.903231683207!2d-84.45801998479305!3d33.979193780625764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f512613a803faf%3A0x23355fe09f6bd8df!2s3322%20Roswell%20Rd%2C%20Marietta%2C%20GA%2030062!5e1!3m2!1sen!2sus!4v1574222123151!5m2!1sen!2sus"
+					width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+			</center>
+
+		</div>
+		<!--Street view map ends  -->
+
+		<!-- Tool images area -->
+
+		<!-- *** Place png image files  needed, from static screen shot of tool for address area, and place them in the folloing aaha repo 
+			 Github path (push via desktop Repo of go online to Githum) for proper rendering:  
+			.../aaha_web/website/static/images . After Please change text below, after "images/" only folling example text. 
+			Be sure to name use the exact name of the .png image you placed in the images file. ***-->
+		<!-- Example change: "images/GuageOutput.png" => "images/someImageName2.png" -->
 
 		<center>
-			<div style="margin: 40px;">
-					<img src="GuageOutput.png" class="rounded float-left" alt="..." style="width: 50%; height: 50%;">
-					<img src="rentBurden.png" class="rounded float-right" alt="...">
-					
-				<div>
-					<img src="demoInfo.png" alt="">
-				</div>
-			</div>	
-		</center>
 
-		<!-- Narrative layer Begin-->
-		<div class="container" style="margin: 40px;">
-			<div class="row align-items-center">
+			<div style="margin: 40px;">
+				<img src="{{ url_for('static', filename='images/GuageOutput.png') }}" class="rounded float-left"
+					alt="..." style="width: 50%; height: 50%;">
+				<img src="{{ url_for('static', filename='images/rentBurden.png') }}" class="rounded float-right"
+					alt="...">
+
+				<div>
+					<img src="{{ url_for('static', filename='images/demoInfo.png') }}" alt="">
+				</div>
+			</div>
+
+		</center>
+		<!-- Tool images area end-->
+
+		<!-- Google ammenities map  -->
+		<!-- Place embeded map here per instructions/ between center tag!!! -->
+
+		<div style="margin: 40px;">
+			<center>
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5037.189827200762!2d-84.45903987164556!3d33.979415108840186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f512613a803faf%3A0x23355fe09f6bd8df!2s3322%20Roswell%20Rd%2C%20Marietta%2C%20GA%2030062!5e0!3m2!1sen!2sus!4v1574222296088!5m2!1sen!2sus"
+					width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+			</center>
+
+		</div>
+
+		<!-- Google ammenities map end -->
+
+
+		<!-- Narrative info block Begin-->
+		<div class="container" style="margin: auto; height: 1000px;">
+			<div class="row">
 				<div class="col-12">
 					<ul class="list-unstyled">
+						<h4> Information About This Site: </h4><br>
 						<li class="media">
 							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-							alt="..." style="width: 2%; height:2%;">
+								alt="..." style="width: 2%; height:2%;">
 							<div class="media-body">
-								<h5 class="mt-0 mb-1">Area FMR</h5>
-								Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-								sollicitudin.
-								Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
-								nunc
-								ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+								<h5 class="mt-0 mb-1">Local Housing Authority</h5>
+								<a href="https://www.mariettahousingauthority.org/">https://www.mariettahousingauthority.org/</a> <br>
+								Marietta Housing Authority – The Marietta Housing Authority (MHA) was established in
+								1938. Its mission is to support the strength and diversity of the Marietta community by
+								providing a wide range of housing opportunities with a focus on affordable housing,
+								promoting community and economic development, and administering the program in a
+								"creative, cooperative, responsive and effective manner." <br>
+
+								Site plan for dense housing in East Cobb: <br>
+								<a href="http://eastcobbnews.com/wp-content/uploads/2019/11/Z-66-site-plan.png">http://eastcobbnews.com/wp-content/uploads/2019/11/Z-66-site-plan.png</a>
 							</div>
-						</li>
+						</li> <br>
 						<li class="media my-4">
 							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-							alt="..." style="width: 2%; height:2%;">
+								alt="..." style="width: 2%; height:2%;">
 							<div class="media-body">
-								<h5 class="mt-0 mb-1">Affordable Rent</h5>
-								Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-								sollicitudin.
-								Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
-								nunc
-								ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+								<h5 class="mt-0 mb-1">Public Transportation</h5>
+								Local bus route (#65) with stops nearby within walking distance is provided by Cobb
+								County Transit authority. This bus route connects to the connector service to Marta for
+								access to Atlanta as well as throughout Cobb County. <br>
+								<a href="https://en.wikipedia.org/wiki/CobbLinc">https://en.wikipedia.org/wiki/CobbLinc</a>
+
 							</div>
-						</li>
+						</li> <br>
 						<li class="media">
 							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-							alt="..." style="width: 2%; height:2%;">
+								alt="..." style="width: 2%; height:2%;">
 							<div class="media-body">
-								<h5 class="mt-0 mb-1"> Gap (Subsidy needed)</h5>
-								Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-								sollicitudin.
-								Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
-								nunc
-								ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+								<h5 class="mt-0 mb-1"> Planning and Zoning</h5>
+								<a href="http://eastcobbnews.com/category/east-cobb-zoning-development/">http://eastcobbnews.com/category/east-cobb-zoning-development/</a> <br>
+								At this site, you can find comprehensive information about zoning proposals, zoning
+								meetings, and more. In general, the county seems to uniformly turn down all multifamily
+								residential zoning proposals.
+
+							</div>
+						</li> <br>
+						<li class="media">
+							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+								alt="..." style="width: 2%; height:2%;">
+							<div class="media-body">
+								<h5 class="mt-0 mb-1"> Schools</h5>
+								The proposed site is zoned for the following schools: <br>
+								Eastside Elementary (upper 5% of all elementary schools statewide) <br>
+								Dickerson Middle School - top performing middle school in Cobb County <br>
+								Walton High School - top performing high school in Cobb County and ranked 4th in the
+								state.
+
+							</div>
+						</li> <br>
+						<li class="media">
+							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+								alt="..." style="width: 2%; height:2%;">
+							<div class="media-body">
+								<h5 class="mt-0 mb-1"> Amenities</h5>
+								Next to East Cobb Park and abuts Fullers Park (largest little league, softball, and
+								baseball complex in the region) <br>
+								Several Medical Centers nearby with one across the street additionally have two walk-in
+								clinics in drugstores nearby <br>
+								Grocery stores include Whole Foods, Trader Joes, Publix, Krogers, Walmart, Super
+								Walmart, Sprouts, Target <br>
+							</div>
+						</li> <br>
+						<li class="media">
+							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+								alt="..." style="width: 2%; height:2%;">
+							<div class="media-body">
+								<h5 class="mt-0 mb-1"> Crime Rate</h5>
+								Lowest in Cobb County <br>
+								<a href="https://eastcobbnews.com/tag/east-cobb-crime-statistics/">https://eastcobbnews.com/tag/east-cobb-crime-statistics/</a> 
 							</div>
 						</li>
-
 					</ul>
 				</div>
 			</div>
 		</div>
 
-		<!-- Narrative layer End-->
-	<!--maps-->
 
-		<div id="street-view"></div>
-			<script>
-				var panorama;
-      			function initialize() {
-					panorama = new google.maps.StreetViewPanorama(
-						document.getElementById('street-view'),
-						{
-							position: { lat: 37.869260, lng: -122.254811 },
-							pov: { heading: 165, pitch: 0 },
-							zoom: 1
-						});
-		  		}
+		<!-- Narrative info block End-->
+
+
+
+		<!-- Tableau Data-->
+
+		<center>
+
+			<!-- ***Please drop tableau link here between center tags -->
+
+			<!-- Please add margin of 40px in first div style section as below after dropping in embed code  -->
+			<!-- Please make sure to change width and height of tableau as 1012px width x 600px height - see lines 368 & 369 respectively -->
+
+			<div class='tableauPlaceholder' id='viz1573767404615' style='position: static; margin: 40px; '>
+				<noscript>
+					<a href='#'><img alt=' '
+							src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiBikeSeniors&#47;YoyTrendsStory&#47;1_rss.png'
+							style='border: none' /></a>
+				</noscript><object class='tableauViz' style='display:none;'>
+					<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+					<param name='embed_code_version' value='3' />
+					<param name='site_root' value='' />
+					<param name='name' value='CitiBikeSeniors&#47;YoyTrendsStory' />
+					<param name='tabs' value='no' />
+					<param name='toolbar' value='yes' />
+					<param name='static_image'
+						value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiBikeSeniors&#47;YoyTrendsStory&#47;1.png' />
+					<param name='animate_transition' value='yes' />
+					<param name='display_static_image' value='yes' />
+					<param name='display_spinner' value='yes' />
+					<param name='display_overlay' value='yes' />
+					<param name='display_count' value='yes' /></object></div>
+			<script type='text/javascript'>
+				var divElement = document.getElementById('viz1573767404615');
+				var vizElement = divElement.getElementsByTagName('object')[0];
+				vizElement.style.width = '1012px';
+				vizElement.style.height = '600px';
+				var scriptElement = document.createElement('script');
+				scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+				vizElement.parentNode.insertBefore(scriptElement, vizElement);                
 			</script>
 
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyHFD38A6CsWBFRZX_I-fHE9fnL50UUQE&callback=initialize">
-</script>
-		
-		<div class="mapouter" style="margin: 40px;">
-			<div class="gmap_canvas">
-				<center>
-				<iframe width="1200" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=3322%20Roswell%20Road%2C%20Marietta%2C%20GA&t=k&z=19&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-				</iframe></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:1150px;}
-				</style>
-				</center>
-			</div>
-		
+		</center>
+		<!-- Tableau Data End-->
 
-	<!-- Tableau Data-->
-	<center>
-		<div class='tableauPlaceholder' id='viz1573767404615' style='position: static;'>
-			<noscript>
-				<a href='#'><img alt=' '
-						src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiBikeSeniors&#47;YoyTrendsStory&#47;1_rss.png'
-						style='border: none' /></a>
-			</noscript><object class='tableauViz' style='display:none;'>
-				<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-				<param name='embed_code_version' value='3' />
-				<param name='site_root' value='' />
-				<param name='name' value='CitiBikeSeniors&#47;YoyTrendsStory' />
-				<param name='tabs' value='no' />
-				<param name='toolbar' value='yes' />
-				<param name='static_image'
-					value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ci&#47;CitiBikeSeniors&#47;YoyTrendsStory&#47;1.png' />
-				<param name='animate_transition' value='yes' />
-				<param name='display_static_image' value='yes' />
-				<param name='display_spinner' value='yes' />
-				<param name='display_overlay' value='yes' />
-				<param name='display_count' value='yes' /></object></div>
-		<script type='text/javascript'>
-		var divElement = document.getElementById('viz1573767404615');
-		var vizElement = divElement.getElementsByTagName('object')[0];
-		vizElement.style.width = '1012px'; vizElement.style.height = '600px';
-		var scriptElement = document.createElement('script');
-		scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-		vizElement.parentNode.insertBefore(scriptElement, vizElement);                
-		</script>
-	</center>
-	<!-- Tableau Data End-->
 
-	<!-- Footer container-->
-	<div class="container-fluid bottomFooter" style="background-color: #f2f2f2; height: 100px; padding: 20px;">
-		<div class="row infoarea">
-			<div class="col-6">
-				<span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+
+		<!-- Footer container-->
+		<div class="container-fluid " style="background-color: #f2f2f2; height: 100px; padding: 20px;">
+			<div class="row infoarea">
+				<div class="col-6" style="text-align: center;">
+					<span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+				</div>
+				<div class="col-6">
+					<span class="align-content-start" style="color: #2874A6 ;">Media:</span> <br>
+					<a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
+					<a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
+					<a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
+				</div>
 			</div>
-			<div class="col-6">
-				<span style="color: #2874A6 ;">Media:</span> <br>
-				<a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
-				<a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
-				<a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
-			</div>
+
 		</div>
-
-	</div>
-	<!-- Footer end-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-	<script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+		<!-- Footer end-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
 </body>
 
 </html>
