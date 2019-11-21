@@ -17,6 +17,20 @@ function getlatlon() {
         d3.select('#address_place').property('value', resData.address);
 
         d3.select('#burden_table').html(resData.burden_data_html);
+        console.log(resData.gap)
+        var gd_text
+        if (resData.gap > 0) {
+
+            gd_text = "This address faces a Rental Affordability Gap of " + resData.gap_pretty +"."
+            // d3.select('#gd-text').text(resData.burden_data_html)
+        } else {
+            gd_text = "This address faces a Rental Affordability Surplus of " + resData.gap_pretty +"."
+        }
+
+        // var gd_text =
+
+
+        d3.select('#gd_text').text(gd_text);
 
         d3.select('#address').text(resData.address);
         d3.select('#af_rent').text(resData.af_rent_pretty);
