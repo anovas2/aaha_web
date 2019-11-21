@@ -321,28 +321,32 @@ def team():
 def about():
     return render_template('about.html')
 
+@app.route('/ml/')
+def ml():
+    return render_template('ml.html')
+
 # @app.route('/map/')
 # def map():
 #     return render_template('index_map.html')
 
-@app.route('/samplesite1/')
+@app.route('/proposedsite1/')
 def samplesite1():
     return render_template('samplesite1.html')
 
 
-@app.route('/samplesite2/')
+@app.route('/proposedsite2/')
 def samplesite2():
     return render_template('samplesite2.html')
 
 
-@app.route('/samplesite3/')
+@app.route('/proposedsite3/')
 def samplesite3():
     return render_template('samplesite3.html')
 
 
-@app.route('/samplesite4/')
-def samplesite4():
-    return render_template('samplesite4.html')
+# @app.route('/samplesite4/')
+# def samplesite4():
+#     return render_template('samplesite4.html')
 
 
 
