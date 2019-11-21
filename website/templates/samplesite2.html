@@ -1,205 +1,421 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Places Search Box</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Affordable Housing</title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Widgets/widgets.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-      }
-
-      #infowindow-content .title {
-        font-weight: bold;
-      }
-
-      #infowindow-content {
-        display: none;
-      }
-
-      #map #infowindow-content {
-        display: inline;
-      }
-
-      .pac-card {
-        margin: 10px 10px 0 0;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-      }
-
-      #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-      }
-
-      .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-      }
-
-      .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 400px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      #title {
-        color: #fff;
-        background-color: #4d90fe;
-        font-size: 25px;
-        font-weight: 500;
-        padding: 6px 12px;
-      }
-      #target {
-        width: 345px;
-      }
-	  #map, #pano {
-        float: left;
-        height: 50%;
-        width: 50%;
-		margin-bottom: 40px;
-		margin-top: 0px;
-      }
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map,
+        #pano {
+            float: left;
+            height: 50%;
+            width: 50%;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .infoarea {
+            margin-bottom: 0;
+        }
+        .social {
+            float: left;
+            margin-left: 20px;
+            margin-bottom: 50px;
+        }
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        #searchInput {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 50%;
+        }
+        #searchInput:focus {
+            border-color: #4d90fe;
+        }
+        .bottomFooter {
+            margin-top: 40px;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        /* Style inputs */
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        /* Style the container/contact section */
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+        /* Create two columns that float next to eachother */
+        .column {
+            float: left;
+            width: 50%;
+            margin-top: 6px;
+            padding: 20px;
+        }
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .column,
+            input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+        #street-view {
+            height: 100%;
+        }
+        .container {
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .item {
+            width: 10em;
+        }
     </style>
-  </head>
-  <body>
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
-	<div id="pano"></div>
-    <script>
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
+</head>
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+<body>
+<!-- Nav start-->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+        <a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;"
+                                                                   src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}"
+                                                                   alt="thinking icon"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      function initAutocomplete() {
-        var fenway = {lat: 42.345573, lng: -71.098326};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 42.345573, lng: -71.098326},
-          zoom: 14
-        });
-        var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'), {
-              position: {lat: 42.345573, lng: -71.098326},
-              pov: {
-                heading: 34,
-                pitch: 10
-              }
-            });
-        map.setStreetView(panorama);
+        <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto btn-style ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Data Stories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
+                        <a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
+                        <a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
+                        <a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Building Consulting Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url_for('tool') }}">Building Tool</a>
+                        <a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
+                        <a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
+                        <a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About AAHA Building Corp</a>
+                </li>
+            </ul>
+            <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
+        </div>
 
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-		panorama.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-		
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
-        });
-		
-		panorama.addListener('bounds_changed', function() {
-          searchBox.setBounds(panorama.getBounds());
-        });
+    </nav>
+    <!-- Nav end-->
+    <!-- Beginning container-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
+                <h1>Achieving Affordable Housing in Atlanta</h1>
+{#                <p style="color: white;">Use the interactive charts below to explore the dataset</p>#}
+            </div>
+        </div>
+    </div>
 
-        var markers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
 
-          if (places.length == 0) {
-            return;
-          }
-
-          // Clear out the old markers.
-          markers.forEach(function(marker) {
-            marker.setMap(null);
-          });
-          markers = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-		  panorama.fitBounds(bounds);
-        });
-      }
-
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyHFD38A6CsWBFRZX_I-fHE9fnL50UUQE&libraries=places&callback=initAutocomplete"
-         async defer></script>
-
-<div style="margin: 40px;">
     <center>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3299.903231683207!2d-84.45801998479305!3d33.979193780625764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f512613a803faf%3A0x23355fe09f6bd8df!2s3322%20Roswell%20Rd%2C%20Marietta%2C%20GA%2030062!5e1!3m2!1sen!2sus!4v1574222123151!5m2!1sen!2sus" width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        <!-- ***Please change text here Property and address below it -->
+        <p>
+        <h2>Property: Oakland City Westend Apartments 2, West End, Atlanta, GA</h2> <br>
+        <h4>978 Peeples St SW, Atlanta, GA 30310</h4>
+        </p>
+
     </center>
 
-</div>
 
-  </body>
+    <!--street view map-->
+
+    <!-- Place embeded map here per instructions/ between center tag!!! -->
+
+    <div style="margin: 40px;">
+        <center>
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2494.499504886178!2d-84.42345588479341!3d33.72828178069534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5033c94a21e1d%3A0xb90f6b928e789542!2s978%20Peeples%20St%20SW%2C%20Atlanta%2C%20GA%2030310!5e1!3m2!1sen!2sus!4v1574267267010!5m2!1sen!2sus"
+                    width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </center>
+
+    </div>
+    <!--Street view map ends  -->
+
+    <!-- Tool images area -->
+
+    <!-- *** Place png image files  needed, from static screen shot of tool for address area, and place them in the folloing aaha repo
+         Github path (push via desktop Repo of go online to Githum) for proper rendering:
+        .../aaha_web/website/static/images . After Please change text below, after "images/" only folling example text.
+        Be sure to name use the exact name of the .png image you placed in the images file. ***-->
+    <!-- Example change: "images/GuageOutput.png" => "images/someImageName2.png" -->
+
+
+
+{#        <div class="row">#}
+{#            <div class="col-12">#}
+                <div align="center">
+                    <img src="{{ url_for('static', filename='images/GuageOutput2.JPG') }}" class="rounded float-center"
+                         alt="..." style="width: 50%; height: 50%;"><br><br><h3>Census Tract Rent Burden Characteristics</h3><br>
+                    <img src="{{ url_for('static', filename='images/rentBurden2.png') }}" class="rounded float-center"
+                         alt="..."><br><br>
+
+                    <div><h3>Crime Statistics</h3><br>
+                        <img src="{{ url_for('static', filename='images/Crime.JPG') }}" class="rounded float-center" alt="">
+                    </div>
+                </div>
+{#            </div>#}
+{#        </div>#}
+
+
+    <!-- Tool images area end-->
+
+    <!-- Google ammenities map  -->
+    <!-- Place embeded map here per instructions/ between center tag!!! -->
+
+    <div style="margin: 40px;">
+        <center>
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.6553119940763!2d-84.42345588479341!3d33.72828178069534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5033c94a21e1d%3A0xb90f6b928e789542!2s978%20Peeples%20St%20SW%2C%20Atlanta%2C%20GA%2030310!5e0!3m2!1sen!2sus!4v1574267605346!5m2!1sen!2sus"
+                    width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </center>
+
+    </div>
+
+    <!-- Google ammenities map end -->
+
+
+    <!-- Narrative info block Begin-->
+    <div class="container" style="margin: auto; height: 1000px;">
+        <div class="row">
+            <div class="col-12">
+                <ul class="list-unstyled">
+                    <h4> Information About This Site: </h4><br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Local Housing Authority</h5>
+                            <a href="https://www.hafc.org/housingprograms.html/">https://www.hafc.org/housingprograms.html/</a> <br>
+                            The Housing Authority of Fulton County (HAFC) was created in 1972 by Fulton County legislation to address the need
+                            for decent, safe, sanitary, and affordable housing in unincorporated Fulton County. HAFC is subject to enabling legislation
+                            authorizing the creation of the Housing Authority, and must comply with all applicable local, state and federal laws,
+                            including the specific HUD rules and regulations governing public housing authorities. By administering and developing housing
+                            opportunities for citizens of low to moderate incomes, the Authority has been able to provide not only housing stock, but also
+                            essential self-sufficiency skills crucial to assisting residents in moving up and out of public housing.
+                        </div>
+                    </li> <br>
+                    <li class="media my-4">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Public Transportation</h5>
+                            <a href="https://www.itsmarta.com/West-End.aspx">https://www.itsmarta.com/West-End.aspx</a> <br>
+                            West End is on the Red and Gold Lines. There is a surface parking lot with 537 spaces. This station has local
+                            MARTA bus service as well as the Atlanta University Center Shuttle serving Clark Atlanta University, Morehouse
+                            and Spelman Colleges.  Shopping, residential housing and historic tourist destinations surround the station.
+                            MARTA hosts the Fresh MARTA Market, a pop-up produce stand, every Tuesday from 3 – 7pm managed by Organix Matters,
+                            Community Farmers Markets & Food Oasis. You can also find StationSoccer, the world's first transit soccer league field,
+                            at this station. West End is also a pioneer neighborhood for the BeltLine project in Atlanta. The first model mile was completed in the spring of 2008.
+                            The model mile consists of the biking and walking path, improvement of two parks.
+                        </div>
+                    </li> <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Planning and Zoning</h5>
+                            <a href="https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/zoning/">https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/zoning</a> <br>
+                            The City of Atlanta is divided into zones or districts that regulate the physical development of the land and limit the uses
+                            to which a property may be put. These zoning districts also regulate the height, overall size, and placement of buildings on a
+                            lot, the density at which buildings may be constructed, and the number of parking spaces that must accompany each new building.
+                        </div>
+                    </li> <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Schools</h5>
+                            Atlanta Public Schools serves the West End: Finch Elementary, Sylvan Middle and Carver High. Atlanta-Fulton Public Library
+                            System operates the West End Branch. West End is adjacent to the Atlanta University Center complex of HBCUs (Historically Black
+                            Colleges and Universities).
+                        </div>
+                    </li> <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Amenities</h5>
+                            West End is a historic neighborhood of Atlanta, one of the oldest outside Downtown Atlanta, and is listed on the National Register of
+                            Historic Places. West End residents are primarily (89%) African American[2] and the neighborhood contains several prominent African
+                            American cultural institutions.  West End is home to a complex of businesses, Best End Brewing. Trees Atlanta planted 200 trees native
+                            to West End which will be part of a 22-mile (35 km) linear arboretum that will follow the BeltLine corridor. Livable Center Initiative
+                            (LCI)[1] granted funds for West End to renovate and improve its streetscape to make it a more walkable community. West End is included
+                            in the Peachtree Corridor plan [2]. With the Peachtree Corridor, the BeltLine, and MARTA, West End will be one of the most transit-oriented
+                            neighborhoods Transit-oriented development in Atlanta. <br>
+                        </div>
+                    </li> <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Crime Rate</h5>
+                            Crime is relatively high in this area, although crime in Fulton County has been on a steady decline over a seven year period. <br>
+                            <<img src=><br>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Narrative info block End-->
+
+
+
+    <!-- Tableau Data-->
+
+    <center>
+
+        <!-- ***Please drop tableau link here between center tags -->
+
+        <!-- Please add margin of 40px in first div style section as below after dropping in embed code  -->
+        <!-- Please make sure to change width and height of tableau as 1012px width x 600px height - see lines 368 & 369 respectively -->
+        <div class='tableauPlaceholder' id='viz1574250765584' style='position: static; margin: 40px; '><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1574250765584');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1012px';vizElement.style.height='600px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+    </center>
+    <!-- Tableau Data End-->
+
+
+
+    <!-- Footer container-->
+    <div class="container-fluid " style="background-color: #f2f2f2; height: 100px; padding: 20px;">
+        <div class="row infoarea">
+            <div class="col-6" style="text-align: center;">
+                <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+            </div>
+            <div class="col-6">
+                <span class="align-content-start" style="color: #2874A6 ;">Media:</span> <br>
+                <a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
+                <a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
+                <a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
+            </div>
+        </div>
+
+    </div>
+    <!-- Footer end-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</body>
+
 </html>
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact Git
