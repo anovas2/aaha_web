@@ -148,7 +148,7 @@ def lat_lon(address):
             "ami": '${:,.2f}'.format(int(ami)),
             "af_rent": int(af_rent),
             "gap": int(fmr - af_rent),
-            "gap_pretty": '${:,.2f}'.format(int(fmr - af_rent)),
+            "gap_pretty": '${:,.2f}'.format(abs(int(fmr - af_rent))),
             "bed1": bed1,
             "bed2": bed2,
             "bed3": bed3,
