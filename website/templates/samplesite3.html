@@ -2,462 +2,473 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Affordable Housing</title>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Affordable Housing</title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-	<script src="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Cesium.js"></script>
-	<link href="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Widgets/widgets.css"
-		rel="stylesheet">
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.63.1/Build/Cesium/Widgets/widgets.css"
+          rel="stylesheet">
 
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
-	<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-	<style>
-		html,
-		body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_arturo.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-		#map,
-		#pano {
-			float: left;
-			height: 50%;
-			width: 50%;
-			margin-top: 40px;
-			margin-bottom: 40px;
+        #map,
+        #pano {
+            float: left;
+            height: 50%;
+            width: 50%;
+            margin-top: 40px;
+            margin-bottom: 40px;
 
-		}
+        }
 
-		.infoarea {
-			margin-bottom: 0;
-		}
+        .infoarea {
+            margin-bottom: 0;
+        }
 
-		.social {
-			float: left;
-			margin-left: 20px;
-			margin-bottom: 50px;
-		}
+        .social {
+            float: left;
+            margin-left: 20px;
+            margin-bottom: 50px;
+        }
 
-		.controls {
-			margin-top: 10px;
-			border: 1px solid transparent;
-			border-radius: 2px 0 0 2px;
-			box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			height: 32px;
-			outline: none;
-			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-		}
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
 
-		#searchInput {
-			background-color: #fff;
-			font-family: Roboto;
-			font-size: 15px;
-			font-weight: 300;
-			margin-left: 12px;
-			padding: 0 11px 0 13px;
-			text-overflow: ellipsis;
-			width: 50%;
-		}
+        #searchInput {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 50%;
+        }
 
-		#searchInput:focus {
-			border-color: #4d90fe;
-		}
+        #searchInput:focus {
+            border-color: #4d90fe;
+        }
 
-		.bottomFooter {
-			margin-top: 40px;
-		}
+        .bottomFooter {
+            margin-top: 40px;
+        }
 
-		* {
-			box-sizing: border-box;
-		}
+        * {
+            box-sizing: border-box;
+        }
 
-		/* Style inputs */
-		input[type=text],
-		select,
-		textarea {
-			width: 100%;
-			padding: 12px;
-			border: 1px solid #ccc;
-			margin-top: 6px;
-			margin-bottom: 16px;
-			resize: vertical;
-		}
+        /* Style inputs */
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
 
-		input[type=submit] {
-			background-color: #4CAF50;
-			color: white;
-			padding: 12px 20px;
-			border: none;
-			cursor: pointer;
-		}
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+        }
 
-		input[type=submit]:hover {
-			background-color: #45a049;
-		}
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
 
-		/* Style the container/contact section */
-		.container {
-			border-radius: 5px;
-			background-color: #f2f2f2;
-			padding: 10px;
-		}
+        /* Style the container/contact section */
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
 
-		/* Create two columns that float next to eachother */
-		.column {
-			float: left;
-			width: 50%;
-			margin-top: 6px;
-			padding: 20px;
-		}
+        /* Create two columns that float next to eachother */
+        .column {
+            float: left;
+            width: 50%;
+            margin-top: 6px;
+            padding: 20px;
+        }
 
-		/* Clear floats after the columns */
-		.row:after {
-			content: "";
-			display: table;
-			clear: both;
-		}
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
 
-		/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-		@media screen and (max-width: 600px) {
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
 
-			.column,
-			input[type=submit] {
-				width: 100%;
-				margin-top: 0;
-			}
-		}
+            .column,
+            input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
 
-		#street-view {
-			height: 100%;
-		}
+        #street-view {
+            height: 100%;
+        }
 
-		.container {
-			height: 500px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+        .container {
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-		.item {
-			width: 10em;
-		}
-	</style>
+        .item {
+            width: 10em;
+        }
+    </style>
 </head>
 
 <body>
-	<!-- Nav start-->
-	<div class="container-fluid">
-		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
-			<a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;"
-					src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}"
-					alt="thinking icon"></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+<!-- Nav start-->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+        <a class="navbar-brand" href="{{ url_for('index') }}"><img style="width:80px;height:80px;"
+                                                                   src="{{ url_for('static', filename='images/kissclipart-design-thinking-icon-png-clipart-icon-design-compu-c9a9e17540f61b3a.png') }}"
+                                                                   alt="thinking icon"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-			<div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto btn-style ">
-					<li class="nav-item active">
-						<a class="nav-link" href="{{ url_for('index') }}">Home <span
-								class="sr-only">(current)</span></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Data Stories
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
-							<a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
-							<a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
-							<a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Building Consulting Services
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="{{ url_for('tool') }}">Building Tool</a>
-							<a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
-							<a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
-							<a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('about') }}">About AAHA Building Corp</a>
-					</li>
-				</ul>
-				<a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
-			</div>
+        <div class="collapse navbar-collapse navElement" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto btn-style ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('team') }}">About the Team</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Data Stories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url_for('story1') }}">What's Happening?</a>
+                        <a class="dropdown-item" href="{{ url_for('story2') }}">Where is it?</a>
+                        <a class="dropdown-item" href="{{ url_for('story3') }}">Needs vs Subsidies vs Realities</a>
+                        <a class="dropdown-item" href="{{ url_for('story4') }}">Your Neighborhood</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Building Consulting Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url_for('tool') }}">Building Tool</a>
+                        <a class="dropdown-item" href="{{ url_for('samplesite1') }}">Proposed Building Site 1</a>
+                        <a class="dropdown-item" href="{{ url_for('samplesite2') }}">Proposed Building Site 2</a>
+                        <a class="dropdown-item" href="{{ url_for('samplesite3') }}">Proposed Building Site 3</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About AAHA Building Corp</a>
+                </li>
+            </ul>
+            <a class="navbar-brand" href="{{ url_for('index') }}" style="color: #F1C40F ;">AAHA Analytics</a>
+        </div>
 
-		</nav>
-		<!-- Nav end-->
-		<!-- Beginning container-->
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
-					<h1>Achieving Affordable Housing in Atlanta</h1>
-{#					<p style="color: white;">Use the interactive charts below to explore the dataset</p>#}
-				</div>
-			</div>
-		</div>
-
-
-		<center>
-			<!-- ***Please change text here Property and address below it -->
-			<p>
-				<h2>Property: Multi-Family Residential Property in Downtown Decatur, GA </h2> <br>
-				<h4>600 Commerce Dr., Decatur, GA 30030</h4>
-			</p>
-
-		</center>
+    </nav>
+    <!-- Nav end-->
+    <!-- Beginning container-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
+                <h1>Achieving Affordable Housing in Atlanta</h1>
+                {#					<p style="color: white;">Use the interactive charts below to explore the dataset</p>#}
+            </div>
+        </div>
+    </div>
 
 
-		<!--street view map-->
+    <center>
+        <!-- ***Please change text here Property and address below it -->
+        <p>
+        <h2>Property: Multi-Family Residential Property in Downtown Decatur, GA </h2> <br>
+        <h4>600 Commerce Dr., Decatur, GA 30030</h4>
+        </p>
 
-		<!-- Place embeded map here per instructions/ between center tag!!! -->
-
-		<div style="margin: 40px;">
-			<center>
-				<iframe
-					src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3544.688216309554!2d-84.2935748!3d33.7761657!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5073ffdcca4cb%3A0x4f2fd5d1a4c0fdaa!2s600%20Commerce%20Dr%2C%20Decatur%2C%20GA%2030030!5e1!3m2!1sen!2sus!4v1574293419005!5m2!1sen!2sus"
-					width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-		</center>
-
-		</div>
-		<!--Street view map ends  -->
-
-		<!-- Tool images area -->
-
-		<!-- *** Place png image files  needed, from static screen shot of tool for address area, and place them in the folloing aaha repo
-			 Github path (push via desktop Repo of go online to Githum) for proper rendering:
-			.../aaha_web/website/static/images . After Please change text below, after "images/" only folling example text.
-			Be sure to name use the exact name of the .png image you placed in the images file. ***-->
-		<!-- Example change: "images/GuageOutput.png" => "images/someImageName2.png" -->
-
-		<center>
-
-			<div style="margin: 40px;">
-				<img src="{{ url_for('static', filename='images/GuageOutput3.png') }}" class="rounded float-center"
-					alt=".."><br><br><h3>Census Tract Rent Burden Characteristics</h3><br>
-				<img src="{{ url_for('static', filename='images/rentBurden3.png') }}" class="rounded float-center"
-					alt="..."><br><br>
-
-				<div>
-					<img src="{{ url_for('static', filename='images/demoInfo3.png') }}" alt="">
-				</div>
-			</div>
-
-		</center>
-		<!-- Tool images area end-->
-
-		<!-- Google ammenities map  -->
-		<!-- Place embeded map here per instructions/ between center tag!!! -->
-
-		<div style="margin: 40px;">
-			<center>
-				<iframe
-					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.400061843603!2d-84.29357478475436!3d33.77616573967566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5073ffdcca4cb%3A0x4f2fd5d1a4c0fdaa!2s600%20Commerce%20Dr%2C%20Decatur%2C%20GA%2030030!5e0!3m2!1sen!2sus!4v1574293692679!5m2!1sen!2sus"
-					width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-		</center>
-
-		</div>
-
-		<!-- Google ammenities map end -->
+    </center>
 
 
-		<!-- Narrative info block Begin-->
-		<div class="container" style="margin: auto; height: 1000px;">
-			<div class="row">
-				<div class="col-12">
-					<ul class="list-unstyled">
-						<h4> Information About This Site: </h4><br>
-						<li class="media">
-							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-								alt="..." style="width: 2%; height:2%;">
-							<div class="media-body">
-								<h5 class="mt-0 mb-1">Local Housing Authority</h5>
-								<a href="http://www.decaturhousing.org/">http://www.decaturhousing.org</a> <br>
-								Decatur Housing Authority – The Decatur Housing Authority (DHA) was established in
-								1938. Its mission is to support the strength and diversity of the Decatur community by
-								providing a wide range of housing opportunities with a focus on affordable housing,
-								promoting community and economic development, and administering the program in a
-								creative, cooperative, responsive and effective manner. <br>
-							</div>
-						</li> <br>
-						<li class="media my-4">
-							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-								alt="..." style="width: 2%; height:2%;">
-							<div class="media-body">
-								<h5 class="mt-0 mb-1">Public Transportation</h5>
-								Walkable distance to Decatur and Avondale Train Station (MARTA).<br>
-								Future Plans – The Clifton Corridor Transit Initiative is MARTA’s proposed light rail line
-								linking the Lindbergh and Avondale Stations. <br>
-								<a href="https://www.itsmarta.com/">https://www.itsmarta.com/</a><br>
-								<a href="https://www.itsmarta.com/clifton-corridor-overview.aspx/">https://www.itsmarta.com/clifton-corridor-overview.aspx/</a>
+    <!--street view map-->
 
-							</div>
-						</li> <br>
-						<li class="media">
-							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-								alt="..." style="width: 2%; height:2%;">
-							<div class="media-body">
-								<h5 class="mt-0 mb-1"> Planning and Zoning</h5>
-								<a href="https://www.decaturga.com/planning/page/workforce-and-affordable-housing">https://www.decaturga.com/planning/page/workforce-and-affordable-housing</a> <br>
-								Lifestyle Density Bonus Program - Developers of multi-family developments may take
-								advantage of a 20 percent density bonus program that allows them to exceed established
-								residential unit densities by 20 percent if 75 percent of these additional units are marketed
-								to individuals and families making 80 percent of the median income.
-								Decatur Next is the informational hub of our city’s collaborative planning efforts,
-								offering historical context, information on current planning efforts, celebration of our
-								accomplishments as those planned endeavors materialize, and opportunities for residents
-								to plug in and contribute. <br>
-								<a href="https://www.decaturnext.com/">https://www.decaturnext.com/</a>
+    <!-- Place embeded map here per instructions/ between center tag!!! -->
 
-							</div>
-						</li> <br>
-						<li class="media">
-							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-								alt="..." style="width: 2%; height:2%;">
-							<div class="media-body">
-								<h5 class="mt-0 mb-1"> Schools</h5>
-								The proposed site is zoned for the Decatur City School District: <br>
-								New Glennwood Elementary (8/10 on GreatSchools.org) <br>
-								Renfroe Middle School (7/10 on GreatSchools.org) <br>
-								Decatur High School - 2019 College Success Award (8/10 on GreatSchools.org)<br>
-								<a href="https://www.greatschools.org/georgia/decatur/decatur-city-school-district/">https://www.greatschools.org/georgia/decatur/decatur-city-school-district/</a>
+    <div style="margin: 40px;">
+        <center>
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3544.688216309554!2d-84.2935748!3d33.7761657!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5073ffdcca4cb%3A0x4f2fd5d1a4c0fdaa!2s600%20Commerce%20Dr%2C%20Decatur%2C%20GA%2030030!5e1!3m2!1sen!2sus!4v1574293419005!5m2!1sen!2sus"
+                    width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </center>
 
-							</div>
-						</li> <br>
-						<li class="media">
-							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-								alt="..." style="width: 2%; height:2%;">
-							<div class="media-body">
-								<h5 class="mt-0 mb-1"> Amenities</h5>
-								Walkable distance to mass transit and the historic Downtown Decatur with a multitude of locally owned shops and restaurants. <br>
-								Five miles from Atlanta BeltLine. <br>
-								Located near one of Atlanta’s biggest job centers – Emory University, Emory Hospital,
-								the Centers for Disease Control, Children’s Healthcare, and Veteran’s Administration
-								Hospital <br>
-							</div>
-						</li> <br>
-						<li class="media">
-							<img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
-								alt="..." style="width: 2%; height:2%;">
-							<div class="media-body">
-								<h5 class="mt-0 mb-1"> Crime Rate</h5>
-								The crime rate for Decatur is near the average for all other communities of similar size. <br>
-								<a href="https://www.neighborhoodscout.com/ga/decatur/crime/">https://www.neighborhoodscout.com/ga/decatur/crime/</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+    </div>
+    <!--Street view map ends  -->
+
+    <!-- Tool images area -->
+
+    <!-- *** Place png image files  needed, from static screen shot of tool for address area, and place them in the folloing aaha repo
+         Github path (push via desktop Repo of go online to Githum) for proper rendering:
+        .../aaha_web/website/static/images . After Please change text below, after "images/" only folling example text.
+        Be sure to name use the exact name of the .png image you placed in the images file. ***-->
+    <!-- Example change: "images/GuageOutput.png" => "images/someImageName2.png" -->
+
+    <center>
+
+        <div style="margin: 40px;">
+            <img src="{{ url_for('static', filename='images/GuageOutput3.png') }}" class="rounded float-center"
+                 alt=".."><br><br>
+            <h3>Census Tract Rent Burden Characteristics</h3><br>
+            <img src="{{ url_for('static', filename='images/rentBurden3.png') }}" class="rounded float-center"
+                 alt="..."><br><br>
+
+            <div>
+                <img src="{{ url_for('static', filename='images/demoInfo3.png') }}" alt="">
+            </div>
+        </div>
+
+    </center>
+    <!-- Tool images area end-->
+
+    <!-- Google ammenities map  -->
+    <!-- Place embeded map here per instructions/ between center tag!!! -->
+
+    <div style="margin: 40px;">
+        <center>
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.400061843603!2d-84.29357478475436!3d33.77616573967566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5073ffdcca4cb%3A0x4f2fd5d1a4c0fdaa!2s600%20Commerce%20Dr%2C%20Decatur%2C%20GA%2030030!5e0!3m2!1sen!2sus!4v1574293692679!5m2!1sen!2sus"
+                    width="1150" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </center>
+
+    </div>
+
+    <!-- Google ammenities map end -->
 
 
-		<!-- Narrative info block End-->
+    <!-- Narrative info block Begin-->
+    <div class="container" style="margin: auto; height: 1000px;">
+        <div class="row">
+            <div class="col-12">
+                <ul class="list-unstyled">
+                    <h4> Information About This Site: </h4><br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Local Housing Authority</h5>
+                            <a href="http://www.decaturhousing.org/">http://www.decaturhousing.org</a> <br>
+                            Decatur Housing Authority – The Decatur Housing Authority (DHA) was established in
+                            1938. Its mission is to support the strength and diversity of the Decatur community by
+                            providing a wide range of housing opportunities with a focus on affordable housing,
+                            promoting community and economic development, and administering the program in a
+                            creative, cooperative, responsive and effective manner. <br>
+                        </div>
+                    </li>
+                    <br>
+                    <li class="media my-4">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Public Transportation</h5>
+                            Walkable distance to Decatur and Avondale Train Station (MARTA).<br>
+                            Future Plans – The Clifton Corridor Transit Initiative is MARTA’s proposed light rail line
+                            linking the Lindbergh and Avondale Stations. <br>
+                            <a href="https://www.itsmarta.com/">https://www.itsmarta.com/</a><br>
+                            <a href="https://www.itsmarta.com/clifton-corridor-overview.aspx/">https://www.itsmarta.com/clifton-corridor-overview.aspx/</a>
+
+                        </div>
+                    </li>
+                    <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Planning and Zoning</h5>
+                            <a href="https://www.decaturga.com/planning/page/workforce-and-affordable-housing">https://www.decaturga.com/planning/page/workforce-and-affordable-housing</a>
+                            <br>
+                            Lifestyle Density Bonus Program - Developers of multi-family developments may take
+                            advantage of a 20 percent density bonus program that allows them to exceed established
+                            residential unit densities by 20 percent if 75 percent of these additional units are
+                            marketed
+                            to individuals and families making 80 percent of the median income.
+                            Decatur Next is the informational hub of our city’s collaborative planning efforts,
+                            offering historical context, information on current planning efforts, celebration of our
+                            accomplishments as those planned endeavors materialize, and opportunities for residents
+                            to plug in and contribute. <br>
+                            <a href="https://www.decaturnext.com/">https://www.decaturnext.com/</a>
+
+                        </div>
+                    </li>
+                    <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Schools</h5>
+                            The proposed site is zoned for the Decatur City School District: <br>
+                            New Glennwood Elementary (8/10 on GreatSchools.org) <br>
+                            Renfroe Middle School (7/10 on GreatSchools.org) <br>
+                            Decatur High School - 2019 College Success Award (8/10 on GreatSchools.org)<br>
+                            <a href="https://www.greatschools.org/georgia/decatur/decatur-city-school-district/">https://www.greatschools.org/georgia/decatur/decatur-city-school-district/</a>
+
+                        </div>
+                    </li>
+                    <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Amenities</h5>
+                            Walkable distance to mass transit and the historic Downtown Decatur with a multitude of
+                            locally owned shops and restaurants. <br>
+                            Five miles from Atlanta BeltLine. <br>
+                            Located near one of Atlanta’s biggest job centers – Emory University, Emory Hospital,
+                            the Centers for Disease Control, Children’s Healthcare, and Veteran’s Administration
+                            Hospital <br>
+                        </div>
+                    </li>
+                    <br>
+                    <li class="media">
+                        <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
+                             alt="..." style="width: 2%; height:2%;">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1"> Crime Rate</h5>
+                            The crime rate for Decatur is near the average for all other communities of similar size.
+                            <br>
+                            <a href="https://www.neighborhoodscout.com/ga/decatur/crime/">https://www.neighborhoodscout.com/ga/decatur/crime/</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
-
-		<!-- Tableau Data-->
-
-		<center>
-
-			<!-- ***Please drop tableau link here between center tags -->
-
-			<!-- Please add margin of 40px in first div style section as below after dropping in embed code  -->
-			<!-- Please make sure to change width and height of tableau as 1012px width x 600px height - see lines 368 & 369 respectively -->
-
-			<div class='tableauPlaceholder' id='viz1574208019986' style='position: relative'>
-				<noscript>
-					<a href='#'><img alt=' '
-						src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-DowntownDecatur&#47;AAHAPropertyProfiles&#47;1_rss.png'
-						style='border: none' /></a>
-					</noscript><object class='tableauViz'  style='display:none;'>
-						<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-						<param name='embed_code_version' value='3' />
-						<param name='site_root' value='' />
-						<param name='name' value='ProposedBuildingSiteViz-DowntownDecatur&#47;AAHAPropertyProfiles' />
-						<param name='tabs' value='no' />
-						<param name='toolbar' value='yes' />
-						<param name='static_image'
-							value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-DowntownDecatur&#47;AAHAPropertyProfiles&#47;1.png' />
-						<param name='animate_transition' value='yes' />
-						<param name='display_static_image' value='yes' />
-						<param name='display_spinner' value='yes' />
-						<param name='display_overlay' value='yes' />
-						<param name='display_count' value='yes' />
-						<param name='filter' value='publish=yes' /></object></div>
-		 <script type='text/javascript'>
-		  var divElement = document.getElementById('viz1574208019986');
-		 	var vizElement = divElement.getElementsByTagName('object')[0];
-			vizElement.style.width='1016px';vizElement.style.height='991px';
-		 	var scriptElement = document.createElement('script');
-			scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-			vizElement.parentNode.insertBefore(scriptElement, vizElement);
-		</script>
-
-		</center>
-		<!-- Tableau Data End-->
+    <!-- Narrative info block End-->
 
 
+    <!-- Tableau Data-->
 
-		<!-- Footer container-->
-		<div class="container-fluid " style="background-color: #f2f2f2; height: 100px; padding: 20px;">
-			<div class="row infoarea">
-				<div class="col-6" style="text-align: center;">
-					<span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
-				</div>
-				<div class="col-6">
-					<span class="align-content-start" style="color: #2874A6 ;">Media:</span> <br>
-					<a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
-					<a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
-					<a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
-				</div>
-			</div>
+    <center>
 
-		</div>
-		<!-- Footer end-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
-		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-		<script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        <!-- ***Please drop tableau link here between center tags -->
+
+        <!-- Please add margin of 40px in first div style section as below after dropping in embed code  -->
+        <!-- Please make sure to change width and height of tableau as 1012px width x 600px height - see lines 368 & 369 respectively -->
+    <br><br>
+        <div class='tableauPlaceholder' id='viz1574208019986' style='position: relative'>
+            <noscript>
+                <a href='#'><img alt=' '
+                                 src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-DowntownDecatur&#47;AAHAPropertyProfiles&#47;1_rss.png'
+                                 style='border: none'/></a>
+            </noscript>
+            <object class='tableauViz' style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F'/>
+                <param name='embed_code_version' value='3'/>
+                <param name='site_root' value=''/>
+                <param name='name' value='ProposedBuildingSiteViz-DowntownDecatur&#47;AAHAPropertyProfiles'/>
+                <param name='tabs' value='no'/>
+                <param name='toolbar' value='yes'/>
+                <param name='static_image'
+                       value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-DowntownDecatur&#47;AAHAPropertyProfiles&#47;1.png'/>
+                <param name='animate_transition' value='yes'/>
+                <param name='display_static_image' value='yes'/>
+                <param name='display_spinner' value='yes'/>
+                <param name='display_overlay' value='yes'/>
+                <param name='display_count' value='yes'/>
+                <param name='filter' value='publish=yes'/>
+            </object>
+        </div>
+        <script type='text/javascript'>
+            var divElement = document.getElementById('viz1574208019986');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            vizElement.style.width = '1016px';
+            vizElement.style.height = '991px';
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
+
+    </center>
+    <!-- Tableau Data End-->
 
 
+    <!-- Footer container-->
+    <div class="container-fluid " style="background-color: #f2f2f2; height: 100px; padding: 20px;">
+        <div class="row infoarea">
+            <div class="col-6" style="text-align: center;">
+                <span style="color: #2874A6 ;">Copyright Info © 2019 AAHA Analytics Firm</span>
+            </div>
+            <div class="col-6">
+                <span class="align-content-start" style="color: #2874A6 ;">Media:</span> <br>
+                <a class="social" href="#" style="color: #F1C40F;">@Facebook</a>
+                <a class="social" href="#" style="color: #F1C40F;">@GitHub</a>
+                <a class="social" href="#" style="color: #F1C40F;">@Twitter</a>
+            </div>
+        </div>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-			crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-			crossorigin="anonymous"></script>
+    </div>
+    <!-- Footer end-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -32,6 +32,7 @@
             margin: 0;
             padding: 0;
         }
+
         #map,
         #pano {
             float: left;
@@ -40,14 +41,17 @@
             margin-top: 40px;
             margin-bottom: 40px;
         }
+
         .infoarea {
             margin-bottom: 0;
         }
+
         .social {
             float: left;
             margin-left: 20px;
             margin-bottom: 50px;
         }
+
         .controls {
             margin-top: 10px;
             border: 1px solid transparent;
@@ -58,6 +62,7 @@
             outline: none;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
+
         #searchInput {
             background-color: #fff;
             font-family: Roboto;
@@ -68,15 +73,19 @@
             text-overflow: ellipsis;
             width: 50%;
         }
+
         #searchInput:focus {
             border-color: #4d90fe;
         }
+
         .bottomFooter {
             margin-top: 40px;
         }
+
         * {
             box-sizing: border-box;
         }
+
         /* Style inputs */
         input[type=text],
         select,
@@ -88,6 +97,7 @@
             margin-bottom: 16px;
             resize: vertical;
         }
+
         input[type=submit] {
             background-color: #4CAF50;
             color: white;
@@ -95,15 +105,18 @@
             border: none;
             cursor: pointer;
         }
+
         input[type=submit]:hover {
             background-color: #45a049;
         }
+
         /* Style the container/contact section */
         .container {
             border-radius: 5px;
             background-color: #f2f2f2;
             padding: 10px;
         }
+
         /* Create two columns that float next to eachother */
         .column {
             float: left;
@@ -111,12 +124,14 @@
             margin-top: 6px;
             padding: 20px;
         }
+
         /* Clear floats after the columns */
         .row:after {
             content: "";
             display: table;
             clear: both;
         }
+
         /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
         @media screen and (max-width: 600px) {
             .column,
@@ -125,15 +140,18 @@
                 margin-top: 0;
             }
         }
+
         #street-view {
             height: 100%;
         }
+
         .container {
             height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .item {
             width: 10em;
         }
@@ -199,7 +217,7 @@
         <div class="row">
             <div class="col-12 jumbotron text-center jumbotron-fluid bg-warning">
                 <h1>Achieving Affordable Housing in Atlanta</h1>
-{#                <p style="color: white;">Use the interactive charts below to explore the dataset</p>#}
+                {#                <p style="color: white;">Use the interactive charts below to explore the dataset</p>#}
             </div>
         </div>
     </div>
@@ -238,21 +256,21 @@
     <!-- Example change: "images/GuageOutput.png" => "images/someImageName2.png" -->
 
 
+    {#        <div class="row">#}
+    {#            <div class="col-12">#}
+    <div align="center">
+        <img src="{{ url_for('static', filename='images/GuageOutput2.JPG') }}" class="rounded float-center"
+             alt="..." style="width: 50%; height: 50%;"><br><br>
+        <h3>Census Tract Rent Burden Characteristics</h3><br>
+        <img src="{{ url_for('static', filename='images/rentBurden2.png') }}" class="rounded float-center"
+             alt="..."><br><br>
 
-{#        <div class="row">#}
-{#            <div class="col-12">#}
-                <div align="center">
-                    <img src="{{ url_for('static', filename='images/GuageOutput2.JPG') }}" class="rounded float-center"
-                         alt="..." style="width: 50%; height: 50%;"><br><br><h3>Census Tract Rent Burden Characteristics</h3><br>
-                    <img src="{{ url_for('static', filename='images/rentBurden2.png') }}" class="rounded float-center"
-                         alt="..."><br><br>
-
-                    <div><br><br>
-                        <img src="{{ url_for('static', filename='images/demoInfo.png') }}" class="rounded float-center" alt="">
-                    </div>
-                </div>
-{#            </div>#}
-{#        </div>#}
+        <div><br><br>
+            <img src="{{ url_for('static', filename='images/demoInfo.png') }}" class="rounded float-center" alt="">
+        </div>
+    </div>
+    {#            </div>#}
+    {#        </div>#}
 
 
     <!-- Tool images area end-->
@@ -283,71 +301,103 @@
                              alt="..." style="width: 2%; height:2%;">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Local Housing Authority</h5>
-                            <a href="https://www.hafc.org/housingprograms.html/">https://www.hafc.org/housingprograms.html/</a> <br>
-                            The Housing Authority of Fulton County (HAFC) was created in 1972 by Fulton County legislation to address the need
-                            for decent, safe, sanitary, and affordable housing in unincorporated Fulton County. HAFC is subject to enabling legislation
-                            authorizing the creation of the Housing Authority, and must comply with all applicable local, state and federal laws,
-                            including the specific HUD rules and regulations governing public housing authorities. By administering and developing housing
-                            opportunities for citizens of low to moderate incomes, the Authority has been able to provide not only housing stock, but also
-                            essential self-sufficiency skills crucial to assisting residents in moving up and out of public housing.
+                            <a href="https://www.hafc.org/housingprograms.html/">https://www.hafc.org/housingprograms.html/</a>
+                            <br>
+                            The Housing Authority of Fulton County (HAFC) was created in 1972 by Fulton County
+                            legislation to address the need
+                            for decent, safe, sanitary, and affordable housing in unincorporated Fulton County. HAFC is
+                            subject to enabling legislation
+                            authorizing the creation of the Housing Authority, and must comply with all applicable
+                            local, state and federal laws,
+                            including the specific HUD rules and regulations governing public housing authorities. By
+                            administering and developing housing
+                            opportunities for citizens of low to moderate incomes, the Authority has been able to
+                            provide not only housing stock, but also
+                            essential self-sufficiency skills crucial to assisting residents in moving up and out of
+                            public housing.
                         </div>
-                    </li> <br>
+                    </li>
+                    <br>
                     <li class="media my-4">
                         <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
                              alt="..." style="width: 2%; height:2%;">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Public Transportation</h5>
-                            <a href="https://www.itsmarta.com/West-End.aspx">https://www.itsmarta.com/West-End.aspx</a> <br>
-                            West End is on the Red and Gold Lines. There is a surface parking lot with 537 spaces. This station has local
-                            MARTA bus service as well as the Atlanta University Center Shuttle serving Clark Atlanta University, Morehouse
-                            and Spelman Colleges.  Shopping, residential housing and historic tourist destinations surround the station.
-                            MARTA hosts the Fresh MARTA Market, a pop-up produce stand, every Tuesday from 3 – 7pm managed by Organix Matters,
-                            Community Farmers Markets & Food Oasis. You can also find StationSoccer, the world's first transit soccer league field,
-                            at this station. West End is also a pioneer neighborhood for the BeltLine project in Atlanta. The first model mile was completed in the spring of 2008.
+                            <a href="https://www.itsmarta.com/West-End.aspx">https://www.itsmarta.com/West-End.aspx</a>
+                            <br>
+                            West End is on the Red and Gold Lines. There is a surface parking lot with 537 spaces. This
+                            station has local
+                            MARTA bus service as well as the Atlanta University Center Shuttle serving Clark Atlanta
+                            University, Morehouse
+                            and Spelman Colleges. Shopping, residential housing and historic tourist destinations
+                            surround the station.
+                            MARTA hosts the Fresh MARTA Market, a pop-up produce stand, every Tuesday from 3 – 7pm
+                            managed by Organix Matters,
+                            Community Farmers Markets & Food Oasis. You can also find StationSoccer, the world's first
+                            transit soccer league field,
+                            at this station. West End is also a pioneer neighborhood for the BeltLine project in
+                            Atlanta. The first model mile was completed in the spring of 2008.
                             The model mile consists of the biking and walking path, improvement of two parks.
                         </div>
-                    </li> <br>
+                    </li>
+                    <br>
                     <li class="media">
                         <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
                              alt="..." style="width: 2%; height:2%;">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1"> Planning and Zoning</h5>
-                            <a href="https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/zoning/">https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/zoning</a> <br>
-                            The City of Atlanta is divided into zones or districts that regulate the physical development of the land and limit the uses
-                            to which a property may be put. These zoning districts also regulate the height, overall size, and placement of buildings on a
-                            lot, the density at which buildings may be constructed, and the number of parking spaces that must accompany each new building.
+                            <a href="https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/zoning/">https://www.atlantaga.gov/government/departments/city-planning/office-of-zoning-development/zoning</a>
+                            <br>
+                            The City of Atlanta is divided into zones or districts that regulate the physical
+                            development of the land and limit the uses
+                            to which a property may be put. These zoning districts also regulate the height, overall
+                            size, and placement of buildings on a
+                            lot, the density at which buildings may be constructed, and the number of parking spaces
+                            that must accompany each new building.
                         </div>
-                    </li> <br>
+                    </li>
+                    <br>
                     <li class="media">
                         <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
                              alt="..." style="width: 2%; height:2%;">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1"> Schools</h5>
-                            Atlanta Public Schools serves the West End: Finch Elementary, Sylvan Middle and Carver High. Atlanta-Fulton Public Library
-                            System operates the West End Branch. West End is adjacent to the Atlanta University Center complex of HBCUs (Historically Black
+                            Atlanta Public Schools serves the West End: Finch Elementary, Sylvan Middle and Carver High.
+                            Atlanta-Fulton Public Library
+                            System operates the West End Branch. West End is adjacent to the Atlanta University Center
+                            complex of HBCUs (Historically Black
                             Colleges and Universities).
                         </div>
-                    </li> <br>
+                    </li>
+                    <br>
                     <li class="media">
                         <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
                              alt="..." style="width: 2%; height:2%;">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1"> Amenities</h5>
-                            West End is a historic neighborhood of Atlanta, one of the oldest outside Downtown Atlanta, and is listed on the National Register of
-                            Historic Places. West End residents are primarily (89%) African American[2] and the neighborhood contains several prominent African
-                            American cultural institutions.  West End is home to a complex of businesses, Best End Brewing. Trees Atlanta planted 200 trees native
-                            to West End which will be part of a 22-mile (35 km) linear arboretum that will follow the BeltLine corridor. Livable Center Initiative
-                            (LCI)[1] granted funds for West End to renovate and improve its streetscape to make it a more walkable community. West End is included
-                            in the Peachtree Corridor plan [2]. With the Peachtree Corridor, the BeltLine, and MARTA, West End will be one of the most transit-oriented
+                            West End is a historic neighborhood of Atlanta, one of the oldest outside Downtown Atlanta,
+                            and is listed on the National Register of
+                            Historic Places. West End residents are primarily (89%) African American[2] and the
+                            neighborhood contains several prominent African
+                            American cultural institutions. West End is home to a complex of businesses, Best End
+                            Brewing. Trees Atlanta planted 200 trees native
+                            to West End which will be part of a 22-mile (35 km) linear arboretum that will follow the
+                            BeltLine corridor. Livable Center Initiative
+                            (LCI)[1] granted funds for West End to renovate and improve its streetscape to make it a
+                            more walkable community. West End is included
+                            in the Peachtree Corridor plan [2]. With the Peachtree Corridor, the BeltLine, and MARTA,
+                            West End will be one of the most transit-oriented
                             neighborhoods Transit-oriented development in Atlanta. <br>
                         </div>
-                    </li> <br>
+                    </li>
+                    <br>
                     <li class="media">
                         <img src="https://cdn2.iconfinder.com/data/icons/basic-4/512/home-512.png" class="mr-3"
                              alt="..." style="width: 2%; height:2%;">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1"> Crime Rate</h5>
-                            Crime is relatively high in this area, although crime in Fulton County has been on a steady decline over a seven year period. <br>
+                            Crime is relatively high in this area, although crime in Fulton County has been on a steady
+                            decline over a seven year period. <br>
                             <<img src=><br>
                         </div>
                     </li>
@@ -360,20 +410,45 @@
     <!-- Narrative info block End-->
 
 
-
     <!-- Tableau Data-->
 
     <center>
-
+    <br><br>
         <!-- ***Please drop tableau link here between center tags -->
 
         <!-- Please add margin of 40px in first div style section as below after dropping in embed code  -->
         <!-- Please make sure to change width and height of tableau as 1012px width x 600px height - see lines 368 & 369 respectively -->
-        <div class='tableauPlaceholder' id='viz1574250765584' style='position: static; margin: 40px; '><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1574250765584');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1012px';vizElement.style.height='600px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        <div class='tableauPlaceholder' id='viz1574250765584' style='position: relative'>
+            <noscript><a href='#'><img alt=' '
+                                       src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles&#47;1_rss.png'
+                                       style='border: none'/></a></noscript>
+            <object class='tableauViz' style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F'/>
+                <param name='embed_code_version' value='3'/>
+                <param name='site_root' value=''/>
+                <param name='name' value='ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles'/>
+                <param name='tabs' value='no'/>
+                <param name='toolbar' value='yes'/>
+                <param name='static_image'
+                       value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pr&#47;ProposedBuildingSiteViz-WestEnd&#47;AAHAPropertyProfiles&#47;1.png'/>
+                <param name='animate_transition' value='yes'/>
+                <param name='display_static_image' value='yes'/>
+                <param name='display_spinner' value='yes'/>
+                <param name='display_overlay' value='yes'/>
+                <param name='display_count' value='yes'/>
+                <param name='filter' value='publish=yes'/>
+            </object>
+        </div>
+        <script type='text/javascript'>                    var divElement = document.getElementById('viz1574250765584');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width = '1050px';
+        vizElement.style.height = '1025px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
 
     </center>
     <!-- Tableau Data End-->
-
 
 
     <!-- Footer container-->
@@ -396,7 +471,6 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/bonus.js') }}"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
