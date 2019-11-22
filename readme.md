@@ -76,6 +76,8 @@ Our develop notes can be found [here](https://docs.google.com/document/d/1LHlZr4
 
 ![image alt text](image_13.png)
 
+Front-end developer notes are [here](https://docs.google.com/document/d/1jYZS2Swf3OwOPDxpqfyAs6ZhbEjcSWh93ksPWrUqVQA/edit).
+
 Please contact us if you have comments or suggestions for improvement.
 
  
